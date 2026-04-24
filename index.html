@@ -1,0 +1,4039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Moe Girls Racing</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Barlow:wght@300;400;500;600&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & base ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0A1628;       /* deep navy */
+  --ink2:#15263D;
+  --ink3:#1E3352;
+  --paper:#F5F3EE;     /* warm off-white */
+  --paper2:#EDE9E0;
+  --rule:#D4CFC4;
+  --rule2:#C5BFB2;
+  --blue:#1A5FAB;
+  --blue-lt:#2E7FD4;
+  --blue-dim:rgba(26,95,171,0.12);
+  --red:#C0392B;
+  --red-lt:#E74C3C;
+  --red-dim:rgba(192,57,43,0.10);
+  --gold:#B8860B;
+  --gold-lt:#D4A017;
+  --gold-dim:rgba(184,134,11,0.12);
+  --green:#1A7A4A;
+  --green-dim:rgba(26,122,74,0.12);
+  --muted:#7A7268;
+  --muted2:#9A9388;
+  --goal-band:rgba(26,122,74,0.08);
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Barlow',sans-serif;
+  font-size:16px;
+  font-weight:400;
+  line-height:1.55;
+  overflow-x:hidden;
+}
+
+/* ── Typography ── */
+.teko{font-family:'Teko',sans-serif}
+.bc{font-family:'Barlow Condensed',sans-serif}
+.num{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:-.02em}
+
+/* ── Page wrapper ── */
+.site{min-height:100vh;display:flex;flex-direction:column}
+
+/* ── Masthead ── */
+.masthead{
+  background:var(--ink);
+  color:var(--paper);
+  padding:0 40px;
+  display:flex;align-items:stretch;
+  border-bottom:3px solid var(--gold);
+  position:sticky;top:0;z-index:200;
+}
+.mast-brand{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0;
+  border-right:1px solid rgba(255,255,255,0.1);
+  padding-right:28px;margin-right:28px;
+}
+.mast-logo{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Teko',sans-serif;font-size:18px;font-weight:600;
+  color:var(--ink);letter-spacing:.02em;flex-shrink:0;
+}
+.mast-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:17px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;line-height:1.1;
+}
+.mast-title small{
+  display:block;font-size:10px;font-weight:400;
+  letter-spacing:.15em;color:rgba(255,255,255,0.45);
+  text-transform:uppercase;margin-top:1px;
+}
+
+/* Sailor tabs in masthead */
+.sailor-tabs{display:flex;gap:4px;align-items:center;flex:1}
+.sailor-tab{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 18px;border-radius:4px 4px 0 0;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;
+  border:1px solid transparent;border-bottom:none;
+  color:rgba(255,255,255,0.45);background:transparent;
+  margin-top:auto;
+}
+.sailor-tab .sail-no{
+  font-size:10px;font-weight:400;letter-spacing:.08em;
+  opacity:.6;
+}
+.sailor-tab.m-tab:hover{color:rgba(255,255,255,0.75)}
+.sailor-tab.s-tab:hover{color:rgba(255,255,255,0.75)}
+.sailor-tab.m-tab.active{
+  background:var(--blue-dim);color:#fff;
+  border-color:rgba(46,127,212,0.3);
+  border-bottom:3px solid var(--blue);
+  margin-bottom:-3px;
+}
+.sailor-tab.s-tab.active{
+  background:var(--red-dim);color:#fff;
+  border-color:rgba(231,76,60,0.3);
+  border-bottom:3px solid var(--red);
+  margin-bottom:-3px;
+}
+.mast-right{
+  margin-left:auto;display:flex;align-items:center;
+  font-size:11px;color:rgba(255,255,255,0.3);
+  letter-spacing:.05em;text-transform:uppercase;
+}
+
+/* ── Season selector ── */
+.season-bar{
+  background:var(--ink2);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  padding:8px 40px;
+  display:flex;align-items:center;gap:8px;
+}
+.season-label{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:600;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(255,255,255,0.4);
+  margin-right:10px;
+}
+.season-pill{
+  padding:8px 20px;border-radius:3px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s;
+  color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.15);
+}
+.season-pill:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.08)}
+.season-pill.active{
+  background:var(--gold);color:var(--ink);
+  border-color:var(--gold);
+  box-shadow:0 2px 8px rgba(184,134,11,0.3);
+}
+.season-meta{
+  margin-left:auto;font-size:12px;
+  color:rgba(255,255,255,0.3);letter-spacing:.05em;
+}
+
+/* ── Panel ── */
+.panel{display:none}
+.panel.active{display:block;animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── Season panel ── */
+.season-panel{display:none}
+.season-panel.active{display:block}
+
+/* ── Content grid ── */
+.content{padding:40px 48px;display:flex;flex-direction:column;gap:36px}
+
+/* ── Scorecard hero ── */
+.scorecard{
+  background:var(--ink);color:var(--paper);
+  border-radius:6px;overflow:hidden;
+  display:grid;grid-template-columns:auto 1fr auto;
+  box-shadow:0 4px 24px rgba(10,22,40,0.15);
+}
+.sc-left{
+  padding:36px 40px;
+  border-right:1px solid rgba(255,255,255,0.07);
+  display:flex;flex-direction:column;justify-content:center;
+  min-width:180px;
+}
+.sc-sailor-name{
+  font-family:'Teko',sans-serif;
+  font-size:clamp(48px,5vw,72px);
+  font-weight:500;letter-spacing:-.01em;line-height:.9;
+  margin-bottom:6px;
+}
+.sc-sailor-name.m-name{color:var(--blue-lt)}
+.sc-sailor-name.s-name{color:var(--red-lt)}
+.sc-sail{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,0.45);
+}
+.sc-center{
+  padding:28px 36px;
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:1px;background:rgba(255,255,255,0.05);
+}
+.sc-stat{background:var(--ink);padding:22px 16px;text-align:center}
+.sc-stat-n{
+  font-family:'Teko',sans-serif;font-size:56px;font-weight:500;
+  line-height:.9;margin-bottom:6px;
+}
+.m-panel .sc-stat-n{color:var(--blue-lt)}
+.s-panel .sc-stat-n{color:var(--red-lt)}
+.sc-stat-l{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(255,255,255,0.4);
+}
+.sc-stat-s{font-size:11px;color:rgba(255,255,255,0.28);margin-top:4px}
+.sc-right{
+  padding:28px 32px;border-left:1px solid rgba(255,255,255,0.07);
+  display:flex;flex-direction:column;justify-content:center;gap:12px;
+  min-width:200px;
+}
+.sc-badge{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:4px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.06em;
+}
+.sc-badge-gold{background:var(--gold-dim);border:1px solid rgba(184,134,11,0.25);color:var(--gold-lt)}
+.sc-badge-blue{background:var(--blue-dim);border:1px solid rgba(26,95,171,0.25);color:#5BA8F0}
+.sc-badge-green{background:var(--green-dim);border:1px solid rgba(26,122,74,0.25);color:#4CAF82}
+.sc-badge-red{background:var(--red-dim);border:1px solid rgba(192,57,43,0.2);color:#E88080}
+.sc-badge-ico{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+
+/* ── Section header ── */
+.sec{
+  display:flex;align-items:baseline;justify-content:space-between;
+  border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:20px;
+}
+.sec h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink);
+}
+.sec-sub{font-size:13px;color:var(--muted);letter-spacing:.03em}
+
+/* ── Goal zone banner ── */
+.goal-strip{
+  background:var(--green-dim);border:1px solid rgba(26,122,74,0.2);
+  border-radius:4px;padding:16px 22px;
+  display:flex;align-items:center;gap:16px;
+}
+.goal-strip-ico{font-size:20px}
+.goal-strip-text{font-size:14px;color:var(--ink2);line-height:1.5}
+.goal-strip-text strong{color:var(--green);font-weight:600}
+
+/* ── Career chart container ── */
+.chart-card{
+  background:#fff;border:1px solid var(--rule);border-radius:6px;
+  padding:24px 28px;
+  box-shadow:0 1px 4px rgba(10,22,40,0.06);
+}
+.chart-card.dark{background:var(--ink);border-color:rgba(255,255,255,0.08)}
+.cv{position:relative}
+.cv-180{height:200px}.cv-220{height:260px}.cv-260{height:300px}
+.cv-300{height:340px}.cv-160{height:190px}
+
+/* ── Chart legend ── */
+.leg-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.leg-line{width:16px;height:2px;border-radius:1px;flex-shrink:0}
+.leg-dline{width:16px;height:0;border-top:2px dashed;flex-shrink:0}
+.leg-band{
+  width:16px;height:7px;border-radius:2px;
+  background:rgba(26,122,74,0.15);border:1px solid rgba(26,122,74,0.3);flex-shrink:0;
+}
+
+/* ── Two / three column grids ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+
+/* ── Girls panel ── */
+.girls-card{
+  background:#fff;border:1px solid var(--rule);border-radius:6px;
+  overflow:hidden;box-shadow:0 1px 4px rgba(10,22,40,0.06);
+}
+.girls-card-top{
+  background:var(--ink3);color:var(--paper);
+  padding:20px 26px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:3px solid var(--gold);
+}
+.girls-card-top h3{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+}
+.girls-best{
+  font-family:'Teko',sans-serif;font-size:42px;font-weight:500;
+  color:var(--gold-lt);line-height:1;
+}
+.girls-best-lbl{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px}
+.girls-stats-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--rule);
+}
+.gs-stat{background:#fff;padding:18px 14px;text-align:center}
+.gs-n{
+  font-family:'Teko',sans-serif;font-size:38px;font-weight:500;
+  color:var(--ink2);line-height:1;margin-bottom:4px;
+}
+.gs-l{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);
+}
+.girls-body{padding:20px 24px}
+.girls-tbl{width:100%;border-collapse:collapse}
+.girls-tbl th{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted2);padding:0 12px 10px;text-align:left;
+  border-bottom:2px solid var(--rule2);
+}
+.girls-tbl th:not(:first-child){text-align:center}
+.girls-tbl td{
+  padding:14px 12px;border-bottom:1px solid var(--rule);
+  font-size:14px;color:var(--ink);vertical-align:middle;
+}
+.girls-tbl td:not(:first-child){text-align:center}
+.girls-tbl tr:last-child td{border-bottom:none}
+.g-rname{font-weight:600;font-size:15px;color:var(--ink)}
+.g-rdate{font-size:12px;color:var(--muted);margin-top:2px}
+.g-pos-big{font-family:'Teko',sans-serif;font-size:34px;line-height:1;color:var(--ink2)}
+.g-of{font-size:12px;color:var(--muted)}
+.pct-cell{display:flex;align-items:center;gap:8px}
+.pct-bg{flex:1;height:5px;background:var(--rule);border-radius:2px;overflow:hidden;min-width:50px}
+.pct-fill{height:100%;border-radius:2px}
+.pct-txt{font-size:12px;color:var(--muted);width:34px;text-align:right;font-weight:600}
+.g-badge{
+  display:inline-block;padding:3px 9px;border-radius:2px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+}
+.g-badge-top3{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(184,134,11,0.2)}
+.g-badge-top30{background:rgba(26,95,171,0.08);color:var(--blue);border:1px solid rgba(26,95,171,0.15)}
+.g-badge-rec{background:rgba(10,22,40,0.05);color:var(--muted);border:1px solid var(--rule)}
+
+/* ── Girls chart section ── */
+.girls-trend{
+  border-top:1px solid var(--rule);padding:20px 24px;
+}
+.girls-trend-lbl{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px;
+}
+.girls-int-bel{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  border-top:1px solid var(--rule);padding:20px 24px;
+}
+.gib-card{
+  background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:16px 18px;
+}
+.gib-lbl{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;
+}
+.gib-val{
+  font-family:'Teko',sans-serif;font-size:42px;font-weight:500;
+  line-height:1;color:var(--ink2);
+}
+.gib-sub{font-size:12px;color:var(--muted);margin-top:3px}
+
+/* ── Regatta log ── */
+.reg-log{display:flex;flex-direction:column;gap:14px}
+.reg-row{
+  background:#fff;border:1px solid var(--rule);border-radius:6px;
+  overflow:hidden;box-shadow:0 1px 3px rgba(10,22,40,0.04);
+}
+.reg-hdr{
+  display:grid;grid-template-columns:auto 1fr auto auto auto;
+  gap:0 18px;align-items:center;
+  padding:18px 22px;cursor:pointer;
+  transition:background .15s;user-select:none;
+}
+.reg-hdr:hover{background:rgba(10,22,40,0.02)}
+.reg-hdr.open{border-bottom:1px solid var(--rule)}
+.reg-num{
+  font-family:'Teko',sans-serif;font-size:26px;font-weight:500;
+  color:var(--muted2);width:32px;text-align:center;flex-shrink:0;
+}
+.reg-info h3{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.reg-info p{font-size:13px;color:var(--muted)}
+.reg-final{text-align:right}
+.reg-final-n{
+  font-family:'Teko',sans-serif;font-size:44px;font-weight:500;line-height:.9;
+}
+.m-panel .reg-final-n{color:var(--blue)}
+.s-panel .reg-final-n{color:var(--red)}
+.reg-final-of{font-size:12px;color:var(--muted)}
+.zb{
+  padding:4px 11px;border-radius:2px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  white-space:nowrap;
+}
+.zb-goal{background:var(--green-dim);color:var(--green);border:1px solid rgba(26,122,74,0.2)}
+.zb-great{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(184,134,11,0.2)}
+.zb-elite{background:rgba(139,92,246,0.08);color:#7C5CBF;border:1px solid rgba(139,92,246,0.2)}
+.zb-push{background:rgba(10,22,40,0.05);color:var(--muted);border:1px solid var(--rule)}
+.reg-expand{
+  font-size:12px;color:var(--muted2);
+  transition:transform .25s;flex-shrink:0;
+}
+.reg-hdr.open .reg-expand{transform:rotate(180deg)}
+
+/* ── Race table inside regatta ── */
+.reg-body{display:none;padding:0 22px 16px}
+.reg-body.open{display:block;animation:slide-in .2s ease}
+@keyframes slide-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+.races-grid{margin-top:12px}
+.race-hdr,.race-row{
+  display:grid;
+  grid-template-columns:36px 48px 1fr 80px 64px 100px;
+  gap:10px;align-items:center;padding:10px 0;
+}
+.race-hdr{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted2);border-bottom:1px solid var(--rule);padding-bottom:8px;
+}
+.race-row{border-bottom:1px solid rgba(10,22,40,0.06)}
+.race-row:last-child{border-bottom:none}
+.race-row.disc{opacity:.3}
+.rn{font-family:'Barlow Condensed',sans-serif;font-size:15px;color:var(--muted)}
+.rp{font-family:'Teko',sans-serif;font-size:26px;line-height:1}
+.m-panel .rp{color:var(--blue)}.s-panel .rp{color:var(--red)}
+.race-row.disc .rp{color:var(--muted)!important}
+.prog{display:flex;align-items:center;gap:8px}
+.prog-bg{flex:1;height:4px;background:var(--rule);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;border-radius:2px}
+.prog-pct{font-size:12px;color:var(--muted);width:32px;text-align:right;font-weight:600}
+.disc-note{font-size:11px;color:var(--muted);font-style:italic}
+.grp-tag{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:2px;display:inline-block;
+}
+.gt-blue{background:rgba(26,95,171,0.10);color:var(--blue)}
+.gt-yellow{background:rgba(184,134,11,0.12);color:var(--gold)}
+.gt-red{background:rgba(192,57,43,0.10);color:var(--red)}
+.gt-bronze{background:rgba(150,100,40,0.10);color:#8B6234}
+.gt-silver{background:rgba(120,120,130,0.10);color:#6B7280}
+.gt-gold{background:rgba(184,134,11,0.15);color:var(--gold)}
+.race-note-txt{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Conditions footer */
+.cond-strip{
+  display:flex;gap:16px;flex-wrap:wrap;
+  margin-top:12px;padding-top:12px;
+  border-top:1px solid var(--rule);
+}
+.cond-item{
+  display:flex;align-items:center;gap:6px;
+  font-size:13px;color:var(--muted);
+}
+.cond-item.good{color:var(--green)}
+
+/* ── Badges ── */
+.badges-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:10px;
+  margin-bottom:20px;
+}
+.badge{
+  background:#fff;border:1px solid var(--rule);border-radius:4px;
+  padding:14px 10px;text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 1px 3px rgba(10,22,40,0.04);
+}
+.badge.earned{
+  border-color:rgba(184,134,11,0.4);
+  background:rgba(184,134,11,0.03);
+}
+.badge-ico{font-size:28px;margin-bottom:6px;display:block}
+.badge:not(.earned) .badge-ico{filter:grayscale(1);opacity:.2}
+.badge.earned .badge-ico{animation:bob 2.5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.badge-cnt{
+  position:absolute;top:5px;right:5px;
+  background:var(--gold);color:var(--ink);
+  font-size:10px;font-weight:800;padding:2px 5px;
+  border-radius:10px;min-width:17px;text-align:center;
+  font-family:'Barlow Condensed',sans-serif;letter-spacing:.02em;
+}
+.badge-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:2px;
+}
+.badge:not(.earned) .badge-name{color:var(--muted2)}
+.badge.earned .badge-name{color:var(--gold)}
+.badge-detail{font-size:10px;color:var(--muted);line-height:1.35}
+.badge.earned .badge-detail{color:rgba(184,134,11,0.7);font-weight:500}
+
+/* ── Trophy cabinet ── */
+.trophy-cab{
+  background:#fff;border:1px solid var(--rule);border-radius:4px;
+  padding:20px 24px;
+  box-shadow:0 1px 3px rgba(10,22,40,0.04);
+}
+.tc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.tc-ttl{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink);
+}
+.tc-count{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:600;letter-spacing:.06em;
+  padding:3px 10px;border-radius:2px;
+  background:var(--gold-dim);color:var(--gold);border:1px solid rgba(184,134,11,0.2);
+}
+.tg{margin-bottom:14px}
+.tg:last-child{margin-bottom:0}
+.tg-lbl{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted2);margin-bottom:6px;
+}
+.ti{
+  display:flex;align-items:center;gap:12px;
+  padding:9px 12px;background:var(--paper);border:1px solid var(--rule);
+  border-radius:3px;margin-bottom:5px;
+}
+.ti:last-child{margin-bottom:0}
+.ti-ico{font-size:16px;flex-shrink:0;width:22px;text-align:center}
+.ti-body{flex:1;min-width:0}
+.ti-name{font-size:13px;font-weight:600;color:var(--ink)}
+.ti-detail{font-size:12px;color:var(--muted);margin-top:2px}
+.ti-date{font-size:11px;color:var(--muted2);white-space:nowrap;flex-shrink:0}
+
+/* ── Footer ── */
+.site-footer{
+  background:var(--ink);color:rgba(255,255,255,0.25);
+  padding:18px 40px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:auto;
+}
+
+/* ── Responsive ── */
+@media(max-width:760px){
+  .masthead,.season-bar,.content{padding-left:16px;padding-right:16px}
+  .scorecard{grid-template-columns:1fr}
+  .sc-left,.sc-right{border:none}
+  .sc-center{grid-template-columns:repeat(3,1fr)}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .badges-grid{grid-template-columns:repeat(4,1fr)}
+  .girls-int-bel{grid-template-columns:1fr}
+  .race-hdr,.race-row{grid-template-columns:28px 38px 1fr 60px}
+  .race-hdr>:nth-child(5),.race-row>:nth-child(5),
+  .race-hdr>:nth-child(6),.race-row>:nth-child(6){display:none}
+}
+</style>
+</head>
+<body>
+<div class="site">
+
+<!-- ── Masthead ── -->
+<header class="masthead">
+  <div class="mast-brand">
+    <div class="mast-logo">MG</div>
+    <div class="mast-title">Moe Girls Racing<small>Optimist &middot; Belgian Circuit</small></div>
+  </div>
+  <nav class="sailor-tabs">
+    <div class="sailor-tab m-tab" onclick="showSailor('mette')">
+      &#9971; Mette <span class="sail-no">&nbsp;#1216</span>
+    </div>
+    <div class="sailor-tab s-tab" onclick="showSailor('stella')">
+      &#9971; Stella <span class="sail-no">&nbsp;#1218</span>
+    </div>
+  </nav>
+  <div class="mast-right" id="upd-time"></div>
+</header>
+
+<!-- ── Season bar ── -->
+<div class="season-bar" id="season-bar">
+  <span class="season-label">Season</span>
+  <!-- filled by JS -->
+  <span class="season-meta" id="season-meta"></span>
+</div>
+
+<!-- ── Panels ── -->
+<div id="p-mette" class="panel m-panel"></div>
+<div id="p-stella" class="panel s-panel"></div>
+
+<!-- ── Footer ── -->
+<footer class="site-footer">
+  <span>&#9971; Moe Girls Racing</span>
+  <span id="footer-upd"></span>
+</footer>
+
+</div><!-- .site -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+"use strict";
+var D   = {
+  "Mette": {
+    "2026": [
+      {
+        "name": "Orlentbeker",
+        "date": "01.03.2026",
+        "fleet": 46,
+        "finalPos": 23,
+        "weather": "Sunny",
+        "windSteady": "12",
+        "windGusts": "16",
+        "windDir": "W",
+        "races": [
+          {
+            "num": 1,
+            "place": 20,
+            "discard": false,
+            "note": "",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 2,
+            "place": 32,
+            "discard": false,
+            "note": "",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 3,
+            "place": 21,
+            "discard": false,
+            "note": "",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 4,
+            "place": 36,
+            "discard": true,
+            "note": "Discard",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 5,
+            "place": 7,
+            "discard": false,
+            "note": "Best race! \u2b50",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 6,
+            "place": 27,
+            "discard": false,
+            "note": "",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          }
+        ],
+        "girlsPos": 4,
+        "girlsTotal": 14,
+        "belgianGirlsPos": 4,
+        "belgianGirlsTotal": 14
+      },
+      {
+        "name": "RBSC Heusden",
+        "date": "08.03.2026",
+        "fleet": 28,
+        "finalPos": 24,
+        "weather": "Fog / Sunny",
+        "windSteady": "3",
+        "windGusts": "10",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 24,
+            "discard": false,
+            "note": "No wind cancelled after 1 race",
+            "raceFleet": 28,
+            "groupTag": null,
+            "windSteady": "3",
+            "windGusts": "10",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": 8,
+        "girlsTotal": 10,
+        "belgianGirlsPos": 8,
+        "belgianGirlsTotal": 10
+      },
+      {
+        "name": "Magic Marine Easter Regatta",
+        "date": "03.04.2026",
+        "fleet": 183,
+        "finalPos": 146,
+        "weather": "Overcast / Building",
+        "windSteady": "10",
+        "windGusts": "20",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 62,
+            "discard": true,
+            "note": "Blue fleet | DNC - did not start R1-R2 (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "10",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 62,
+            "discard": true,
+            "note": "Blue fleet | DNC - did not start R1-R2 (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "10",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 47,
+            "discard": false,
+            "note": "Blue fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "3",
+            "windGusts": "16",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 39,
+            "discard": false,
+            "note": "Blue fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "3",
+            "windGusts": "16",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 35,
+            "discard": false,
+            "note": "Blue fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "3",
+            "windGusts": "16",
+            "windDir": ""
+          },
+          {
+            "num": 6,
+            "place": 36,
+            "discard": false,
+            "note": "Blue fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "3",
+            "windGusts": "16",
+            "windDir": ""
+          },
+          {
+            "num": 7,
+            "place": 62,
+            "discard": true,
+            "note": "Bronze fleet | DNC - injury (61)",
+            "raceFleet": 61,
+            "groupTag": "bronze",
+            "windSteady": "15",
+            "windGusts": "25",
+            "windDir": ""
+          },
+          {
+            "num": 8,
+            "place": 8,
+            "discard": false,
+            "note": "Bronze fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "bronze",
+            "windSteady": "15",
+            "windGusts": "25",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": 58,
+        "girlsTotal": 76,
+        "belgianGirlsPos": 7,
+        "belgianGirlsTotal": 7
+      },
+      {
+        "name": "Optispring2026",
+        "date": "11.04.2026",
+        "fleet": 78,
+        "finalPos": 46,
+        "weather": "",
+        "windSteady": "10-12",
+        "windGusts": "20",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 40,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 46,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 26,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 54,
+            "discard": true,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 36,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 6,
+            "place": 41,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 7,
+            "place": 51,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": 16,
+        "girlsTotal": 28,
+        "belgianGirlsPos": 5,
+        "belgianGirlsTotal": 13
+      },
+      {
+        "name": "United4 Medemblik I",
+        "date": "18.04.2026",
+        "fleet": 114,
+        "finalPos": 74,
+        "weather": "Overcast/Rain",
+        "windSteady": "9",
+        "windGusts": "14",
+        "windDir": "SW",
+        "races": [
+          {
+            "num": 1,
+            "place": 34,
+            "discard": false,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "9",
+            "windGusts": "14",
+            "windDir": "SW"
+          },
+          {
+            "num": 2,
+            "place": 45,
+            "discard": true,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "9",
+            "windGusts": "14",
+            "windDir": "SW"
+          },
+          {
+            "num": 3,
+            "place": 38,
+            "discard": false,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "9",
+            "windGusts": "14",
+            "windDir": "SW"
+          },
+          {
+            "num": 4,
+            "place": 20,
+            "discard": false,
+            "note": "Blue fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "blue",
+            "windSteady": "14",
+            "windGusts": "20",
+            "windDir": "SW"
+          },
+          {
+            "num": 5,
+            "place": 35,
+            "discard": false,
+            "note": "Blue fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "blue",
+            "windSteady": "14",
+            "windGusts": "20",
+            "windDir": "SW"
+          },
+          {
+            "num": 6,
+            "place": 33,
+            "discard": false,
+            "note": "Blue fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "blue",
+            "windSteady": "14",
+            "windGusts": "20",
+            "windDir": "SW"
+          }
+        ],
+        "girlsPos": 23,
+        "girlsTotal": 42,
+        "belgianGirlsPos": 6,
+        "belgianGirlsTotal": 8
+      }
+    ],
+    "2025": [
+      {
+        "name": "Optimist Nationals",
+        "date": "23.02.2025",
+        "fleet": 47,
+        "finalPos": 44,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 42,
+            "discard": false,
+            "note": "",
+            "raceFleet": 47,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 46,
+            "discard": false,
+            "note": "",
+            "raceFleet": 47,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 42,
+            "discard": false,
+            "note": "",
+            "raceFleet": 47,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 48,
+            "discard": true,
+            "note": "DSQ",
+            "raceFleet": 47,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "Orlentbeker",
+        "date": "16.03.2025",
+        "fleet": 49,
+        "finalPos": 44,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 40,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 36,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 35,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 48,
+            "discard": true,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 42,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 6,
+            "place": 38,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National 3 Oostende",
+        "date": "11.05.2025",
+        "fleet": 56,
+        "finalPos": 44,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 43,
+            "discard": false,
+            "note": "",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 41,
+            "discard": false,
+            "note": "",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 44,
+            "discard": true,
+            "note": "",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 43,
+            "discard": false,
+            "note": "",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 28,
+            "discard": false,
+            "note": "",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National Optimist N4",
+        "date": "07.06.2025",
+        "fleet": 40,
+        "finalPos": 31,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 30,
+            "discard": false,
+            "note": "",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 41,
+            "discard": true,
+            "note": "DNC",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 41,
+            "discard": false,
+            "note": "DNC",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 41,
+            "discard": false,
+            "note": "DNC",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 26,
+            "discard": false,
+            "note": "",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National Optimist Wos",
+        "date": "24.08.2025",
+        "fleet": 35,
+        "finalPos": 31,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 34,
+            "discard": true,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 34,
+            "discard": false,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 24,
+            "discard": false,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 31,
+            "discard": false,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 20,
+            "discard": false,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National 6 Blankenberge",
+        "date": "31.08.2025",
+        "fleet": 36,
+        "finalPos": 33,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 35,
+            "discard": false,
+            "note": "",
+            "raceFleet": 36,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 31,
+            "discard": false,
+            "note": "",
+            "raceFleet": 36,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 26,
+            "discard": false,
+            "note": "",
+            "raceFleet": 36,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "Nieuwpoort Optifall",
+        "date": "13.09.2025",
+        "fleet": 67,
+        "finalPos": 52,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 43,
+            "discard": false,
+            "note": "",
+            "raceFleet": 67,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 43,
+            "discard": false,
+            "note": "",
+            "raceFleet": 67,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 46,
+            "discard": false,
+            "note": "",
+            "raceFleet": 67,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 57,
+            "discard": true,
+            "note": "",
+            "raceFleet": 67,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National 7 Spaghetti",
+        "date": "21.09.2025",
+        "fleet": 39,
+        "finalPos": 31,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 36,
+            "discard": false,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 30,
+            "discard": false,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 31,
+            "discard": false,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 14,
+            "discard": false,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 37,
+            "discard": true,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National 8 Kinrooi",
+        "date": "05.10.2025",
+        "fleet": 34,
+        "finalPos": 26,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 24,
+            "discard": false,
+            "note": "",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 22,
+            "discard": false,
+            "note": "",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 27,
+            "discard": false,
+            "note": "",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 20,
+            "discard": false,
+            "note": "",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 35,
+            "discard": true,
+            "note": "DNF",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National Optimist & Spirou",
+        "date": "12.10.2025",
+        "fleet": 16,
+        "finalPos": 15,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 14,
+            "discard": true,
+            "note": "",
+            "raceFleet": 16,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 14,
+            "discard": false,
+            "note": "",
+            "raceFleet": 16,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 10,
+            "discard": false,
+            "note": "",
+            "raceFleet": 16,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 14,
+            "discard": false,
+            "note": "",
+            "raceFleet": 16,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "KLYC Nationaal Optimist 9",
+        "date": "19.10.2025",
+        "fleet": 42,
+        "finalPos": 31,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 32,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 26,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 30,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 34,
+            "discard": true,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 28,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 6,
+            "place": 25,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      }
+    ]
+  },
+  "Stella": {
+    "2026": [
+      {
+        "name": "Orlentbeker",
+        "date": "01.03.2026",
+        "fleet": 46,
+        "finalPos": 34,
+        "weather": "Sunny",
+        "windSteady": "12",
+        "windGusts": "16",
+        "windDir": "W",
+        "races": [
+          {
+            "num": 1,
+            "place": 12,
+            "discard": false,
+            "note": "Great start \u2b50",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 2,
+            "place": 41,
+            "discard": false,
+            "note": "",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 3,
+            "place": 47,
+            "discard": true,
+            "note": "UFD penalty",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 4,
+            "place": 27,
+            "discard": false,
+            "note": "",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 5,
+            "place": 28,
+            "discard": false,
+            "note": "",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          },
+          {
+            "num": 6,
+            "place": 40,
+            "discard": false,
+            "note": "",
+            "raceFleet": 46,
+            "groupTag": null,
+            "windSteady": "12",
+            "windGusts": "16",
+            "windDir": "W"
+          }
+        ],
+        "girlsPos": 8,
+        "girlsTotal": 14,
+        "belgianGirlsPos": 8,
+        "belgianGirlsTotal": 14
+      },
+      {
+        "name": "RBSC Heusden",
+        "date": "08.03.2026",
+        "fleet": 28,
+        "finalPos": 19,
+        "weather": "Fog / Sunny",
+        "windSteady": "3",
+        "windGusts": "10",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 19,
+            "discard": false,
+            "note": "No wind cancelled after 1 race",
+            "raceFleet": 28,
+            "groupTag": null,
+            "windSteady": "3",
+            "windGusts": "10",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": 6,
+        "girlsTotal": 10,
+        "belgianGirlsPos": 6,
+        "belgianGirlsTotal": 10
+      },
+      {
+        "name": "Magic Marine Easter Regatta",
+        "date": "03.04.2026",
+        "fleet": 183,
+        "finalPos": 117,
+        "weather": "Overcast / Building",
+        "windSteady": "10",
+        "windGusts": "20",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 34,
+            "discard": false,
+            "note": "Yellow fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "yellow",
+            "windSteady": "10",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 36,
+            "discard": false,
+            "note": "Yellow fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "yellow",
+            "windSteady": "10",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 40,
+            "discard": false,
+            "note": "Red fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "red",
+            "windSteady": "3",
+            "windGusts": "16",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 37,
+            "discard": true,
+            "note": "Red fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "red",
+            "windSteady": "3",
+            "windGusts": "16",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 34,
+            "discard": false,
+            "note": "Red fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "red",
+            "windSteady": "3",
+            "windGusts": "16",
+            "windDir": ""
+          },
+          {
+            "num": 6,
+            "place": 44,
+            "discard": false,
+            "note": "Red fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "red",
+            "windSteady": "3",
+            "windGusts": "16",
+            "windDir": ""
+          },
+          {
+            "num": 7,
+            "place": 36,
+            "discard": false,
+            "note": "Blue Silver fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "15",
+            "windGusts": "25",
+            "windDir": ""
+          },
+          {
+            "num": 8,
+            "place": 31,
+            "discard": false,
+            "note": "Blue Silver fleet (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "15",
+            "windGusts": "25",
+            "windDir": ""
+          },
+          {
+            "num": 9,
+            "place": 62,
+            "discard": true,
+            "note": "Blue Silver fleet | UFD (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "3",
+            "windGusts": "7",
+            "windDir": ""
+          },
+          {
+            "num": 10,
+            "place": 62,
+            "discard": false,
+            "note": "Blue Silver fleet | BFD (61)",
+            "raceFleet": 61,
+            "groupTag": "blue",
+            "windSteady": "3",
+            "windGusts": "7",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": 48,
+        "girlsTotal": 76,
+        "belgianGirlsPos": 5,
+        "belgianGirlsTotal": 7
+      },
+      {
+        "name": "Optispring2026",
+        "date": "11.04.2026",
+        "fleet": 78,
+        "finalPos": 52,
+        "weather": "",
+        "windSteady": "10-12",
+        "windGusts": "20",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 55,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 40,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 28,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 57,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 47,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 6,
+            "place": 57,
+            "discard": false,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          },
+          {
+            "num": 7,
+            "place": 63,
+            "discard": true,
+            "note": "",
+            "raceFleet": 78,
+            "groupTag": null,
+            "windSteady": "10-12",
+            "windGusts": "20",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": 20,
+        "girlsTotal": 28,
+        "belgianGirlsPos": 7,
+        "belgianGirlsTotal": 13
+      },
+      {
+        "name": "United4 Medemblik I",
+        "date": "18.04.2026",
+        "fleet": 114,
+        "finalPos": 84,
+        "weather": "Overcast/Rain",
+        "windSteady": "9",
+        "windGusts": "14",
+        "windDir": "SW",
+        "races": [
+          {
+            "num": 1,
+            "place": 28,
+            "discard": false,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "9",
+            "windGusts": "14",
+            "windDir": "SW"
+          },
+          {
+            "num": 2,
+            "place": 44,
+            "discard": true,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "9",
+            "windGusts": "14",
+            "windDir": "SW"
+          },
+          {
+            "num": 3,
+            "place": 39,
+            "discard": false,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "9",
+            "windGusts": "14",
+            "windDir": "SW"
+          },
+          {
+            "num": 4,
+            "place": 43,
+            "discard": false,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "14",
+            "windGusts": "20",
+            "windDir": "SW"
+          },
+          {
+            "num": 5,
+            "place": 42,
+            "discard": false,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "14",
+            "windGusts": "20",
+            "windDir": "SW"
+          },
+          {
+            "num": 6,
+            "place": 44,
+            "discard": false,
+            "note": "Yellow fleet (57)",
+            "raceFleet": 57,
+            "groupTag": "yellow",
+            "windSteady": "14",
+            "windGusts": "20",
+            "windDir": "SW"
+          }
+        ],
+        "girlsPos": 26,
+        "girlsTotal": 42,
+        "belgianGirlsPos": 8,
+        "belgianGirlsTotal": 8
+      }
+    ],
+    "2025": [
+      {
+        "name": "Optimist Nationals",
+        "date": "23.02.2025",
+        "fleet": 47,
+        "finalPos": 47,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 46,
+            "discard": false,
+            "note": "",
+            "raceFleet": 47,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 47,
+            "discard": false,
+            "note": "",
+            "raceFleet": 47,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 48,
+            "discard": true,
+            "note": "DNF",
+            "raceFleet": 47,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 48,
+            "discard": false,
+            "note": "DNC",
+            "raceFleet": 47,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "Orlentbeker",
+        "date": "16.03.2025",
+        "fleet": 49,
+        "finalPos": 48,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 42,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 42,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 48,
+            "discard": true,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 47,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 46,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 6,
+            "place": 46,
+            "discard": false,
+            "note": "",
+            "raceFleet": 49,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National 3 Oostende",
+        "date": "11.05.2025",
+        "fleet": 56,
+        "finalPos": 55,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 57,
+            "discard": true,
+            "note": "DNF",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 57,
+            "discard": false,
+            "note": "DNF",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 52,
+            "discard": false,
+            "note": "",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 57,
+            "discard": false,
+            "note": "DNF",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 48,
+            "discard": false,
+            "note": "",
+            "raceFleet": 56,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National Optimist N4",
+        "date": "07.06.2025",
+        "fleet": 40,
+        "finalPos": 35,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 41,
+            "discard": true,
+            "note": "RET",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 41,
+            "discard": false,
+            "note": "DNC",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 41,
+            "discard": false,
+            "note": "DNC",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 41,
+            "discard": false,
+            "note": "DNC",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 41,
+            "discard": false,
+            "note": "DNC",
+            "raceFleet": 40,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National Optimist Wos",
+        "date": "24.08.2025",
+        "fleet": 35,
+        "finalPos": 35,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 35,
+            "discard": true,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 35,
+            "discard": false,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 27,
+            "discard": false,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 33,
+            "discard": false,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 35,
+            "discard": false,
+            "note": "",
+            "raceFleet": 35,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National 6 Blankenberge",
+        "date": "31.08.2025",
+        "fleet": 36,
+        "finalPos": 36,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 36,
+            "discard": false,
+            "note": "",
+            "raceFleet": 36,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 33,
+            "discard": false,
+            "note": "",
+            "raceFleet": 36,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 37,
+            "discard": false,
+            "note": "BFD",
+            "raceFleet": 36,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "Nieuwpoort Optifall",
+        "date": "13.09.2025",
+        "fleet": 67,
+        "finalPos": 59,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 45,
+            "discard": false,
+            "note": "",
+            "raceFleet": 67,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 64,
+            "discard": false,
+            "note": "",
+            "raceFleet": 67,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 51,
+            "discard": false,
+            "note": "",
+            "raceFleet": 67,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 68,
+            "discard": true,
+            "note": "DNF",
+            "raceFleet": 67,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National 7 Spaghetti",
+        "date": "21.09.2025",
+        "fleet": 39,
+        "finalPos": 39,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 38,
+            "discard": false,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 34,
+            "discard": false,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 37,
+            "discard": false,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 40,
+            "discard": true,
+            "note": "UFD",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 39,
+            "discard": false,
+            "note": "",
+            "raceFleet": 39,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National 8 Kinrooi",
+        "date": "05.10.2025",
+        "fleet": 34,
+        "finalPos": 29,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 30,
+            "discard": false,
+            "note": "",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 35,
+            "discard": true,
+            "note": "DSQ",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 26,
+            "discard": false,
+            "note": "",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 35,
+            "discard": false,
+            "note": "DNF",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 35,
+            "discard": false,
+            "note": "DNF",
+            "raceFleet": 34,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "National Optimist & Spirou",
+        "date": "12.10.2025",
+        "fleet": 16,
+        "finalPos": 16,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 16,
+            "discard": true,
+            "note": "",
+            "raceFleet": 16,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 15,
+            "discard": false,
+            "note": "",
+            "raceFleet": 16,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 13,
+            "discard": false,
+            "note": "",
+            "raceFleet": 16,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 15,
+            "discard": false,
+            "note": "",
+            "raceFleet": 16,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      },
+      {
+        "name": "KLYC Nationaal Optimist 9",
+        "date": "19.10.2025",
+        "fleet": 42,
+        "finalPos": 34,
+        "weather": "",
+        "windSteady": "",
+        "windGusts": "",
+        "windDir": "",
+        "races": [
+          {
+            "num": 1,
+            "place": 34,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 2,
+            "place": 34,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 3,
+            "place": 34,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 4,
+            "place": 37,
+            "discard": true,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 5,
+            "place": 24,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          },
+          {
+            "num": 6,
+            "place": 30,
+            "discard": false,
+            "note": "",
+            "raceFleet": 42,
+            "groupTag": null,
+            "windSteady": "",
+            "windGusts": "",
+            "windDir": ""
+          }
+        ],
+        "girlsPos": null,
+        "girlsTotal": null,
+        "belgianGirlsPos": null,
+        "belgianGirlsTotal": null
+      }
+    ]
+  }
+};
+var CFG = {
+  "Mette": {
+    "color": "#1A5FAB",
+    "sail": "1216",
+    "goal_pct_lo": 47.7,
+    "goal_pct_hi": 69.6,
+    "ref_lo": 15,
+    "ref_hi": 25
+  },
+  "Stella": {
+    "color": "#C0392B",
+    "sail": "1218",
+    "goal_pct_lo": 35.6,
+    "goal_pct_hi": 57.8,
+    "ref_lo": 20,
+    "ref_hi": 30
+  }
+};
+
+/* ── Helpers ── */
+function ord(n){var s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);}
+function pct(place,fleet){return fleet>1?Math.round((1-(place-1)/(fleet-1))*1000)/10:0;}
+function pfp(p,fleet){return Math.max(1,Math.min(fleet,Math.round(1+(1-p/100)*(fleet-1))));}
+function zoneOf(place,fleet,cfg){
+  var p=pct(place,fleet);
+  if(p>=90)return{label:'Elite',cls:'zb-elite'};
+  if(p>=75)return{label:'Great',cls:'zb-great'};
+  var lo=pfp(cfg.goal_pct_hi,fleet),hi=pfp(cfg.goal_pct_lo,fleet);
+  if(place>=lo&&place<=hi)return{label:'Goal Zone',cls:'zb-goal'};
+  if(p>=50)return{label:'Top Half',cls:'zb-great'};
+  return{label:'Keep going',cls:'zb-push'};
+}
+function barColor(p){
+  if(p>=75)return'#1A7A4A';
+  if(p>=50)return'#B8860B';
+  if(p>=30)return'#C0392B';
+  return'#8B0000';
+}
+function grpTag(note){
+  if(!note)return'';
+  var n=note.toLowerCase();
+  if(n.includes('blue silver')||n.includes('silver'))return{cls:'gt-silver',lbl:'Silver'};
+  if(n.includes('blue'))return{cls:'gt-blue',lbl:'Blue'};
+  if(n.includes('yellow'))return{cls:'gt-yellow',lbl:'Yellow'};
+  if(n.includes('red'))return{cls:'gt-red',lbl:'Red'};
+  if(n.includes('bronze'))return{cls:'gt-bronze',lbl:'Bronze'};
+  if(n.includes('gold'))return{cls:'gt-gold',lbl:'Gold'};
+  return null;
+}
+function cleanNote(note){
+  if(!note)return'';
+  return note.replace(/blue silver fleet\s*\|?\s*/i,'')
+    .replace(/blue fleet\s*\|?\s*/i,'').replace(/yellow fleet\s*\|?\s*/i,'')
+    .replace(/red fleet\s*\|?\s*/i,'').replace(/bronze fleet\s*\|?\s*/i,'')
+    .replace(/silver fleet\s*\|?\s*/i,'').trim();
+}
+function calcStats(regs){
+  var finals=regs.map(function(r){return r.finalPos;});
+  var spreads=regs.map(function(r){
+    var v=r.races.filter(function(x){return !x.discard;}).map(function(x){return x.place;});
+    return v.length>=2?Math.max(...v)-Math.min(...v):0;
+  });
+  var best=regs.map(function(r){
+    return Math.min(...r.races.filter(function(x){return !x.discard;}).map(function(x){return x.place;}));
+  });
+  var worst=regs.map(function(r){
+    return Math.max(...r.races.filter(function(x){return !x.discard;}).map(function(x){return x.place;}));
+  });
+  var sum=0,runAvg=finals.map(function(v,i){sum+=v;return Math.round(sum/(i+1));});
+  return{
+    pb:Math.min(...finals),
+    avg:Math.round(finals.reduce(function(a,b){return a+b;},0)/finals.length),
+    bestRace:Math.min(...best),
+    consistent:spreads.filter(function(s){return s<=5;}).length,
+    n:regs.length,spreads,finals,best,worst,runAvg
+  };
+}
+
+/* ── Chart plugins ── */
+var GL={color:'rgba(10,22,40,0.05)'};
+var GL_DARK={color:'rgba(255,255,255,0.04)'};
+
+function goalZonePlugin(regs,cfg){
+  return{id:'gz',beforeDatasetsDraw:function(chart){
+    var{ctx,chartArea:ca,scales:{x,y}}=chart;if(!ca)return;
+    ctx.save();
+    var bw=regs.length>1?(x.getPixelForValue(1)-x.getPixelForValue(0)):ca.width;
+    regs.forEach(function(reg,i){
+      var lo=pfp(cfg.goal_pct_hi,reg.fleet),hi=pfp(cfg.goal_pct_lo,reg.fleet);
+      var cx=x.getPixelForValue(i),xL=cx-bw*.5,xR=cx+bw*.5;
+      var y1=y.getPixelForValue(lo-.5),y2=y.getPixelForValue(hi+.5);
+      ctx.fillStyle='rgba(26,122,74,0.09)';
+      ctx.fillRect(Math.max(ca.left,xL),Math.min(y1,y2),
+        Math.min(xR,ca.right)-Math.max(ca.left,xL),Math.abs(y2-y1));
+    });
+    if(regs.length>0){
+      var lo0=pfp(cfg.goal_pct_hi,regs[0].fleet),hi0=pfp(cfg.goal_pct_lo,regs[0].fleet);
+      [lo0,hi0].forEach(function(v){
+        var yy=y.getPixelForValue(v);
+        ctx.strokeStyle='rgba(26,122,74,0.3)';ctx.setLineDash([4,4]);ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(ca.left,yy);ctx.lineTo(ca.right,yy);ctx.stroke();
+      });
+      ctx.setLineDash([]);ctx.fillStyle='#1A7A4A';ctx.font='600 11px Barlow Condensed';
+      ctx.fillText('GOAL ZONE',ca.left+6,y.getPixelForValue(pfp(cfg.goal_pct_lo,regs[0].fleet))-4);
+    }
+    ctx.restore();
+  }};
+}
+function seasonGoalPlugin(af,cfg){
+  /* Legacy static version — kept for backward compat but no longer called */
+  return{id:'sg',beforeDatasetsDraw:function(chart){
+    var{ctx,chartArea:ca,scales:{y}}=chart;if(!ca)return;
+    var lo=pfp(cfg.goal_pct_hi,af),hi=pfp(cfg.goal_pct_lo,af);
+    var y1=y.getPixelForValue(lo-.5),y2=y.getPixelForValue(hi+.5);
+    ctx.save();ctx.fillStyle='rgba(26,122,74,0.08)';
+    ctx.fillRect(ca.left,Math.min(y1,y2),ca.width,Math.abs(y2-y1));
+    ctx.strokeStyle='rgba(26,122,74,0.25)';ctx.setLineDash([4,4]);ctx.lineWidth=1;
+    [y1,y2].forEach(function(yy){ctx.beginPath();ctx.moveTo(ca.left,yy);ctx.lineTo(ca.right,yy);ctx.stroke();});
+    ctx.setLineDash([]);ctx.fillStyle='#1A7A4A';ctx.font='600 11px Barlow Condensed';
+    ctx.fillText('GOAL ZONE',ca.left+6,Math.min(y1,y2)-4);ctx.restore();
+  }};
+}
+function scatterGoalPlugin(breaks,cfg){
+  /* Dynamic goal zone — adapts band height per regatta based on fleet size */
+  return{id:'sg2',beforeDatasetsDraw:function(chart){
+    var{ctx,chartArea:ca,scales:{x,y}}=chart;if(!ca)return;
+    var totalPts=breaks.length>0?breaks[breaks.length-1].end+1:0;
+    if(totalPts<1)return;
+    ctx.save();
+    breaks.forEach(function(b){
+      var lo=pfp(cfg.goal_pct_hi,b.fleet),hi=pfp(cfg.goal_pct_lo,b.fleet);
+      var xL=x.getPixelForValue(b.start),xR=x.getPixelForValue(b.end);
+      var hw=(totalPts>1)?(x.getPixelForValue(1)-x.getPixelForValue(0))*.5:ca.width*.5;
+      xL-=hw;xR+=hw;
+      xL=Math.max(ca.left,xL);xR=Math.min(ca.right,xR);
+      var y1=y.getPixelForValue(lo-.5),y2=y.getPixelForValue(hi+.5);
+      ctx.fillStyle='rgba(26,122,74,0.09)';
+      ctx.fillRect(xL,Math.min(y1,y2),xR-xL,Math.abs(y2-y1));
+    });
+    /* Label using first regatta's band */
+    if(breaks.length>0){
+      var lo0=pfp(cfg.goal_pct_hi,breaks[0].fleet),hi0=pfp(cfg.goal_pct_lo,breaks[0].fleet);
+      ctx.fillStyle='#1A7A4A';ctx.font='600 11px Barlow Condensed';
+      ctx.fillText('GOAL ZONE',ca.left+6,y.getPixelForValue(lo0)-4);
+    }
+    ctx.restore();
+  }};
+}
+function regDivPlugin(breaks,dark){
+  return{id:'rd',afterDraw:function(chart){
+    var{ctx,chartArea:ca,scales:{x}}=chart;if(!ca)return;
+    var yBase=chart.height-4;
+    ctx.save();
+    breaks.forEach(function(b,i){
+      if(i===0)return;
+      var xp=x.getPixelForValue(b.start);
+      var step=x.getPixelForValue(1)-x.getPixelForValue(0);
+      ctx.strokeStyle=dark?'rgba(255,255,255,0.12)':'rgba(10,22,40,0.12)';
+      ctx.lineWidth=1;ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(xp-step*.5,ca.top);ctx.lineTo(xp-step*.5,yBase-16);ctx.stroke();
+      ctx.setLineDash([]);
+    });
+    breaks.forEach(function(b){
+      var mid=(x.getPixelForValue(b.start)+x.getPixelForValue(b.end))/2;
+      ctx.textAlign='center';
+      ctx.fillStyle=dark?'rgba(255,255,255,0.45)':'rgba(10,22,40,0.3)';
+      ctx.font='600 12px Barlow Condensed';
+      ctx.fillText(b.name,mid,yBase-12);
+      ctx.fillStyle=dark?'rgba(255,255,255,0.35)':'rgba(10,22,40,0.2)';
+      ctx.font='11px Barlow Condensed';
+      ctx.fillText('fleet '+b.fleet,mid,yBase);
+    });
+    ctx.restore();
+  }};
+}
+function conLinePlugin(){
+  return{id:'cl',afterDatasetsDraw:function(chart){
+    var{ctx,chartArea:ca,scales:{y}}=chart;if(!ca)return;
+    var yy=y.getPixelForValue(5);
+    ctx.save();ctx.strokeStyle='rgba(26,122,74,0.4)';ctx.setLineDash([4,4]);ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(ca.left,yy);ctx.lineTo(ca.right,yy);ctx.stroke();
+    ctx.setLineDash([]);ctx.fillStyle='#1A7A4A';ctx.font='600 11px Barlow Condensed';
+    ctx.fillText('Consistent target',ca.right-110,yy-4);ctx.restore();
+  }};
+}
+function girlsGoalPlugin(mx){
+  return{id:'gg',beforeDatasetsDraw:function(chart){
+    var{ctx,chartArea:ca,scales:{y}}=chart;if(!ca)return;
+    var bh=Math.round(mx*.3),y1=y.getPixelForValue(.5),y2=y.getPixelForValue(bh+.5);
+    ctx.save();ctx.fillStyle='rgba(184,134,11,0.07)';
+    ctx.fillRect(ca.left,Math.min(y1,y2),ca.width,Math.abs(y2-y1));
+    ctx.strokeStyle='rgba(184,134,11,0.25)';ctx.setLineDash([4,4]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(ca.left,y2);ctx.lineTo(ca.right,y2);ctx.stroke();
+    ctx.setLineDash([]);ctx.fillStyle='#B8860B';ctx.font='600 11px Barlow Condensed';
+    ctx.fillText('Top 30%',ca.left+6,y2-4);ctx.restore();
+  }};
+}
+function careerSeasonPlugin(boundaries){
+  return{id:'cs',afterDraw:function(chart){
+    var{ctx,chartArea:ca,scales:{x}}=chart;if(!ca)return;
+    var yBase=chart.height-8;
+    ctx.save();
+    boundaries.forEach(function(b,i){
+      var mid=(x.getPixelForValue(b.start)+x.getPixelForValue(b.end))/2;
+      if(i>0){
+        var xp=x.getPixelForValue(b.start);
+        var step=x.getPixelForValue(1)-x.getPixelForValue(0);
+        ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;ctx.setLineDash([2,3]);
+        ctx.beginPath();ctx.moveTo(xp-step*.5,ca.top);ctx.lineTo(xp-step*.5,yBase-12);ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      ctx.textAlign='center';ctx.fillStyle='rgba(255,255,255,0.6)';ctx.font='700 13px Barlow Condensed';
+      ctx.fillText(b.season,mid,yBase);
+    });
+    ctx.restore();
+  }};
+}
+
+/* ── Build a full sailor panel ── */
+function buildPanel(key, sailorData, activeSeasonKey) {
+  var panel = document.getElementById('p-'+key);
+  var sailor = key==='mette'?'Mette':'Stella';
+  var cfg = CFG[sailor];
+  var col = key==='mette'?'#1A5FAB':'#C0392B';
+  var colLt = key==='mette'?'#2E7FD4':'#E74C3C';
+  var pfx = key[0];
+
+  if(!sailorData||typeof sailorData!=='object'){
+    panel.innerHTML='<div style="padding:60px;text-align:center;color:var(--muted)">No data.</div>';
+    return;
+  }
+
+  var seasons = Object.keys(sailorData).sort();
+  if(!activeSeasonKey) activeSeasonKey = seasons[seasons.length-1];
+  var regs = sailorData[activeSeasonKey]||[];
+  if(!regs.length){
+    panel.innerHTML='<div style="padding:60px;text-align:center;color:var(--muted)">No data for this season.</div>';
+    return;
+  }
+
+  /* Destroy existing charts */
+  Chart.helpers.each(Chart.instances, function(c){
+    if(c.canvas&&c.canvas.id&&c.canvas.id.startsWith(pfx+'-'))c.destroy();
+  });
+
+  var st = calcStats(regs);
+  var maxFleet = Math.max(...regs.map(function(r){return r.fleet;}));
+  var avgFleet = Math.round(regs.reduce(function(a,r){return a+r.fleet;},0)/regs.length);
+
+  /* Wind & Performance — dumbbell per day: group races by wind conditions */
+  var windSteadyPts=[],windGustPts=[],windRegs=[];
+  regs.forEach(function(reg){
+    /* Group races by unique wind steady+gust combo (= proxy for different days) */
+    var dayMap={};
+    reg.races.forEach(function(r){
+      var wsStr=String(r.windSteady||reg.windSteady||'');
+      var ws=0;
+      if(wsStr.indexOf('-')>0){var pp=wsStr.split('-');ws=(parseFloat(pp[0])+parseFloat(pp[1]))/2;}
+      else ws=parseFloat(wsStr)||0;
+      if(ws<=0)return;
+      var gst=parseFloat(r.windGusts||reg.windGusts)||ws;
+      var key=ws+'|'+gst;
+      if(!dayMap[key])dayMap[key]={ws:ws,gst:gst,races:[],dir:r.windDir||reg.windDir||'—'};
+      if(!r.discard)dayMap[key].races.push(r);
+    });
+    var days=Object.values(dayMap);
+    if(days.length===0){
+      /* Fallback: use regatta-level wind if no per-race data */
+      var wsStr=String(reg.windSteady||'');
+      var ws=0;
+      if(wsStr.indexOf('-')>0){var pp=wsStr.split('-');ws=(parseFloat(pp[0])+parseFloat(pp[1]))/2;}
+      else ws=parseFloat(wsStr)||0;
+      if(ws>0){
+        var gst=parseFloat(reg.windGusts)||ws;
+        var pctVal=reg.fleet>1?Math.round((1-(reg.finalPos-1)/(reg.fleet-1))*100):0;
+        days=[{ws:ws,gst:gst,dir:reg.windDir||'—',pct:pctVal,races:reg.races}];
+      }
+    }
+    days.forEach(function(d,di){
+      if(d.races.length===0)return;
+      /* Average race-level percentile for this day's races */
+      var sum=0,cnt=0;
+      d.races.forEach(function(r){
+        var rf=r.raceFleet||reg.fleet;
+        if(rf>1){sum+=(1-(r.place-1)/(rf-1))*100;cnt++;}
+      });
+      var pctVal=cnt>0?Math.round(sum/cnt):0;
+      var perf=pctVal>=60?'good':pctVal>=35?'ok':'weak';
+      var dayLabel=days.length>1?' (Day '+(di+1)+')':'';
+      windSteadyPts.push({x:d.ws,y:pctVal});
+      windGustPts.push({x:d.gst,y:pctVal});
+      windRegs.push({name:reg.name+dayLabel,fleet:reg.fleet,pos:reg.finalPos,
+        steady:d.ws,gust:d.gst,dir:d.dir,pct:pctVal,perf:perf,
+        raceCount:d.races.length});
+    });
+  });
+
+  /* Steadiness — % of counted races within ±3 positions of median */
+  var steadyData=regs.map(function(reg){
+    var v=reg.races.filter(function(r){return !r.discard;}).map(function(r){return r.place;});
+    if(v.length<2)return 100;
+    var sorted=v.slice().sort(function(a,b){return a-b;});
+    var med=sorted[Math.floor(sorted.length/2)];
+    var within=v.filter(function(p){return Math.abs(p-med)<=3;}).length;
+    return Math.round(within/v.length*100);
+  });
+
+  /* Discard Analysis — count by specific race number */
+  var discByRace={};
+  var discTotal=0;
+  regs.forEach(function(reg){
+    reg.races.forEach(function(r){
+      if(!r.discard)return;
+      discTotal++;
+      var key='R'+r.num;
+      discByRace[key]=(discByRace[key]||0)+1;
+    });
+  });
+  var discRaceLabels=Object.keys(discByRace).sort(function(a,b){return parseInt(a.slice(1))-parseInt(b.slice(1));});
+  var discRaceCounts=discRaceLabels.map(function(k){return discByRace[k];});
+
+  /* Girls */
+  var gR = regs.filter(function(r){return r.girlsPos!=null&&r.girlsTotal>0;});
+  var hg = gR.length>0;
+  var gBest = hg?Math.min(...gR.map(function(r){return r.girlsPos;})):null;
+  var gAvg  = hg?(gR.reduce(function(a,r){return a+r.girlsPos;},0)/gR.length).toFixed(1):null;
+  var gTop3 = hg?gR.filter(function(r){return r.girlsPos<=3;}).length:0;
+  var gPctA = hg?(gR.map(function(r){return pct(r.girlsPos,r.girlsTotal);}).reduce(function(a,b){return a+b;},0)/gR.length).toFixed(1):null;
+  var mxGT  = hg?Math.max(...gR.map(function(r){return r.girlsTotal;})):10;
+  var gcId  = pfx+'-gc';
+  /* Belgian girls */
+  var bgR = regs.filter(function(r){return r.belgianGirlsPos!=null&&r.belgianGirlsTotal>0;});
+  var hbg = bgR.length>0;
+  var bgBest = hbg?Math.min(...bgR.map(function(r){return r.belgianGirlsPos;})):null;
+  var bgAvg  = hbg?(bgR.reduce(function(a,r){return a+r.belgianGirlsPos;},0)/bgR.length).toFixed(1):null;
+
+  /* Trophies */
+  var T=[];var runB=Infinity;
+  regs.forEach(function(reg){
+    if(reg.finalPos<runB){runB=reg.finalPos;T.push({ico:'\uD83C\uDFC5',key:'pb',name:'Personal Best',detail:ord(reg.finalPos)+' at '+reg.name,date:reg.date});}
+  });
+  regs.forEach(function(reg){
+    var lo=pfp(cfg.goal_pct_hi,reg.fleet),hi=pfp(cfg.goal_pct_lo,reg.fleet);
+    if(reg.finalPos>=lo&&reg.finalPos<=hi)T.push({ico:'\uD83C\uDFAF',key:'goal',name:'Goal Zone',detail:ord(reg.finalPos)+' of '+reg.fleet+' (band '+lo+'\u2013'+hi+')',date:reg.date});
+  });
+  regs.forEach(function(reg){
+    reg.races.filter(function(r){return !r.discard&&r.place<=10;}).forEach(function(r){
+      T.push({ico:'\uD83D\uDD25',key:'top10',name:'Top 10 Race',detail:ord(r.place)+' in R'+r.num+' at '+reg.name,date:reg.date});
+    });
+  });
+  regs.forEach(function(reg,ri){
+    if(st.spreads[ri]<=5)T.push({ico:'\uD83D\uDCD0',key:'con',name:'Consistent',detail:'Spread '+st.spreads[ri]+' at '+reg.name,date:reg.date});
+  });
+  gR.forEach(function(reg){
+    if(reg.girlsPos<=3)T.push({ico:'\uD83C\uDFC6',key:'gtop3',name:'Girls Top 3',detail:ord(reg.girlsPos)+' of '+reg.girlsTotal+' at '+reg.name,date:reg.date});
+  });
+  if(hg){var gbr=gR.reduce(function(a,r){return a.girlsPos<r.girlsPos?a:r;});
+    T.push({ico:'\u2B50',key:'gbest',name:'Girls Season Best',detail:ord(gbr.girlsPos)+' of '+gbr.girlsTotal+' at '+gbr.name,date:gbr.date});}
+  if(regs.length>=6){
+    var l3=regs.slice(-3).reduce(function(a,r){return a+r.finalPos;},0)/3;
+    var f3=regs.slice(0,3).reduce(function(a,r){return a+r.finalPos;},0)/3;
+    if(l3<f3)T.push({ico:'\uD83D\uDCC8',key:'trend',name:'Trending Up',detail:'Last 3 regattas better than first 3',date:regs.at(-1).date});
+  }
+  var counts={};T.forEach(function(t){counts[t.key]=(counts[t.key]||0)+1;});
+  var BDEFS=[
+    {key:'pb',ico:'\uD83C\uDFC5',name:'Personal Best',locked:'First regatta'},
+    {key:'goal',ico:'\uD83C\uDFAF',name:'Goal Zone',locked:'Finish in band'},
+    {key:'top10',ico:'\uD83D\uDD25',name:'Top 10 Race',locked:'Single race top 10'},
+    {key:'con',ico:'\uD83D\uDCD0',name:'Consistent',locked:'Spread \u22645'},
+    {key:'gtop3',ico:'\uD83C\uDFC6',name:'Girls Top 3',locked:'Top 3 girls'},
+    {key:'gbest',ico:'\u2B50',name:'Girls Best',locked:'Record girls result'},
+    {key:'trend',ico:'\uD83D\uDCC8',name:'Trending Up',locked:'Need 6 regattas'},
+  ];
+  var TG={};BDEFS.forEach(function(b){
+    var ins=T.filter(function(t){return t.key===b.key;});
+    if(ins.length)TG[b.key]={ico:b.ico,name:b.name,instances:ins};
+  });
+
+  /* Career data for career chart */
+  var careerPts=[];var careerCols=[];var careerLabels=[];
+  var careerBounds=[];var careerPos=0;
+  seasons.forEach(function(sKey){
+    var sRegs=sailorData[sKey]||[];
+    var sStart=careerPos;
+    sRegs.forEach(function(reg){
+      var p=reg.fleet>1?Math.round((1-(reg.finalPos-1)/(reg.fleet-1))*100):0;
+      careerPts.push(p);
+      careerCols.push(sKey===activeSeasonKey?colLt:col+'88');
+      careerLabels.push(reg.name.length>10?reg.name.substring(0,10)+'\u2026':reg.name);
+      careerPos++;
+    });
+    if(sRegs.length) careerBounds.push({start:sStart,end:careerPos-1,season:sKey});
+  });
+
+  /* Year-over-Year data */
+  var MONTHS=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function dateToMonth(d){var p=d.split('.');return parseInt(p[1])+(parseInt(p[0])-1)/30;}
+  var prevIdx=seasons.indexOf(activeSeasonKey)-1;
+  var prevSeasonKey=prevIdx>=0?seasons[prevIdx]:null;
+  var prevRegs=prevSeasonKey?sailorData[prevSeasonKey]||[]:[];
+  var yoyPrev=prevRegs.map(function(r){return{x:dateToMonth(r.date),y:pct(r.finalPos,r.fleet),name:r.name,date:r.date,pos:r.finalPos,fleet:r.fleet};});
+  var yoyCurr=regs.map(function(r){return{x:dateToMonth(r.date),y:pct(r.finalPos,r.fleet),name:r.name,date:r.date,pos:r.finalPos,fleet:r.fleet};});
+
+  /* Girls table */
+  var girlsRows = hg ? gR.map(function(reg){
+    var p=pct(reg.girlsPos,reg.girlsTotal);
+    var fc=reg.girlsPos<=3?'var(--gold)':'var(--blue)';
+    var badge=reg.girlsPos<=3?'<span class="g-badge g-badge-top3">Top 3</span>':
+      p>=70?'<span class="g-badge g-badge-top30">Top 30%</span>':
+      '<span class="g-badge g-badge-rec">Recorded</span>';
+    var row1='<tr>'
+      +'<td><div class="g-rname">'+reg.name+'</div><div class="g-rdate">'+reg.date+' &bull; Fleet '+reg.fleet+'</div></td>'
+      +'<td><div class="g-pos-big">'+ord(reg.girlsPos)+'</div></td>'
+      +'<td><div class="g-of">of '+reg.girlsTotal+'</div></td>'
+      +'<td><div class="pct-cell"><div class="pct-bg"><div class="pct-fill" style="width:'+Math.round(p)+'%;background:'+fc+'"></div></div><span class="pct-txt">'+p+'%</span></div></td>'
+      +'<td>'+badge+'</td>'
+      +'</tr>';
+    var row2='';
+    if(reg.belgianGirlsPos!=null&&reg.belgianGirlsTotal>0){
+      var bp=pct(reg.belgianGirlsPos,reg.belgianGirlsTotal);
+      var bfc=reg.belgianGirlsPos<=3?'var(--gold)':'var(--gold)';
+      var bbadge=reg.belgianGirlsPos<=3?'<span class="g-badge g-badge-top3">Top 3</span>':
+        bp>=70?'<span class="g-badge g-badge-top30">Top 30%</span>':
+        '<span class="g-badge g-badge-rec">Recorded</span>';
+      row2='<tr style="background:rgba(184,134,11,0.04)">'
+        +'<td style="padding-left:28px"><div class="g-rdate" style="font-weight:600;color:var(--gold)">&#9873; Belgian girls</div></td>'
+        +'<td><div class="g-pos-big" style="font-size:28px;color:var(--gold)">'+ord(reg.belgianGirlsPos)+'</div></td>'
+        +'<td><div class="g-of">of '+reg.belgianGirlsTotal+'</div></td>'
+        +'<td><div class="pct-cell"><div class="pct-bg"><div class="pct-fill" style="width:'+Math.round(bp)+'%;background:var(--gold)"></div></div><span class="pct-txt">'+bp+'%</span></div></td>'
+        +'<td>'+bbadge+'</td>'
+        +'</tr>';
+    }
+    return row1+row2;
+  }).join('') : '';
+
+  /* Regatta log */
+  var regLogHtml = regs.map(function(reg,ri){
+    var zone=zoneOf(reg.finalPos,reg.fleet,cfg);
+    var lo=pfp(cfg.goal_pct_hi,reg.fleet),hi=pfp(cfg.goal_pct_lo,reg.fleet);
+    var spread=st.spreads[ri];
+    var racesHtml=reg.races.map(function(r){
+      var rf=r.raceFleet||reg.fleet;
+      var p=pct(r.place,rf);
+      var bw=Math.max(3,Math.round(p));
+      var z=zoneOf(r.place,rf,cfg);
+      var gt=grpTag(r.note);
+      var noteClean=cleanNote(r.note);
+      var rfLabel=rf!==reg.fleet?' <span style="font-size:11px;color:var(--muted);font-weight:400">/ '+rf+'</span>':'';
+      if(r.discard){
+        return '<div class="race-row disc">'
+          +'<span class="rn">'+r.num+rfLabel+'</span>'
+          +'<span class="rp">'+r.place+'</span>'
+          +'<span class="disc-note">Discard'+(noteClean?' \u2014 '+noteClean:'')+'</span>'
+          +'<span></span>'
+          +'<span>'+(gt?'<span class="grp-tag '+gt.cls+'">'+gt.lbl+'</span>':'')+'</span>'
+          +'<span></span>'
+          +'</div>';
+      }
+      return '<div class="race-row">'
+        +'<span class="rn">'+r.num+rfLabel+'</span>'
+        +'<span class="rp">'+r.place+'</span>'
+        +'<div class="prog"><div class="prog-bg"><div class="prog-fill" style="width:'+bw+'%;background:'+barColor(p)+'"></div></div><span class="prog-pct">'+p+'%</span></div>'
+        +'<span class="zb '+z.cls+'" style="font-size:9px">'+z.label+'</span>'
+        +'<span>'+(gt?'<span class="grp-tag '+gt.cls+'">'+gt.lbl+'</span>':'')+'</span>'
+        +'<span class="race-note-txt">'+noteClean+'</span>'
+        +'</div>';
+    }).join('');
+    return '<div class="reg-row">'
+      +'<div class="reg-hdr" onclick="toggleReg(\''+pfx+'\','+ri+',this)">'
+      +'<div class="reg-num">'+(ri+1)+'</div>'
+      +'<div class="reg-info"><h3>'+reg.name+'</h3>'
+      +'<p>'+reg.date+' &bull; Fleet '+reg.fleet+' &bull; Goal band '+lo+'\u2013'+hi+'</p></div>'
+      +'<div class="reg-final"><div class="reg-final-n">'+reg.finalPos+'</div><div class="reg-final-of">of '+reg.fleet+'</div></div>'
+      +'<span class="zb '+zone.cls+'">'+zone.label+'</span>'
+      +'<span class="reg-expand">&#9660;</span>'
+      +'</div>'
+      +'<div class="reg-body" id="'+pfx+'-rb-'+ri+'">'
+      +'<div class="races-grid">'
+      +'<div class="race-hdr"><span>Race</span><span>Place</span><span>Fleet %</span><span>Zone</span><span>Group</span><span>Notes</span></div>'
+      +racesHtml+'</div>'
+      +'<div class="cond-strip">'
+      +(reg.weather?'<div class="cond-item">'+reg.weather+'</div>':'')
+      +(reg.windSteady&&reg.windGusts?'<div class="cond-item">'+reg.windSteady+'\u2013'+reg.windGusts+'kn'+(reg.windDir?' '+reg.windDir:'')+'</div>':'')
+      +(spread<=5?'<div class="cond-item good">Consistent \u2014 spread '+spread+'</div>':'')
+      +'</div></div></div>';
+  }).join('');
+
+  /* Badges */
+  var badgesHtml = BDEFS.map(function(b){
+    var n=counts[b.key]||0,earned=n>0;
+    var last=T.filter(function(t){return t.key===b.key;});
+    last=last.length?last[last.length-1]:null;
+    return '<div class="badge'+(earned?' earned':'')+'"><span class="badge-ico">'+b.ico+'</span>'
+      +(earned&&n>1?'<div class="badge-cnt">x'+n+'</div>':'')
+      +'<div class="badge-name">'+b.name+'</div>'
+      +'<div class="badge-detail">'+(earned&&last?last.detail:b.locked)+'</div>'
+      +'</div>';
+  }).join('');
+
+  var trophyHtml = Object.values(TG).map(function(g){
+    return '<div class="tg"><div class="tg-lbl">'+g.ico+' '+g.name+' &mdash; '+g.instances.length+'x</div>'
+      +g.instances.map(function(t){
+        return '<div class="ti"><span class="ti-ico">'+t.ico+'</span>'
+          +'<div class="ti-body"><div class="ti-name">'+t.name+'</div><div class="ti-detail">'+t.detail+'</div></div>'
+          +'<span class="ti-date">'+t.date+'</span></div>';
+      }).join('')+'</div>';
+  }).join('');
+
+  /* ── Scorecard badges (right panel) ── */
+  var scBadges=[];
+  var avgPct=Math.round(regs.map(function(r){return pct(r.finalPos,r.fleet);}).reduce(function(a,b){return a+b;},0)/regs.length);
+  scBadges.push('<div class="sc-badge sc-badge-blue"><span class="sc-badge-ico">\uD83D\uDCCA</span>Avg fleet percentile: '+avgPct+'%</div>');
+  if(hg) scBadges.push('<div class="sc-badge sc-badge-gold"><span class="sc-badge-ico">\u2660</span>Girls: '+ord(gBest)+' of '+mxGT+' (best)</div>');
+  if(st.consistent>0) scBadges.push('<div class="sc-badge sc-badge-green"><span class="sc-badge-ico">\uD83D\uDCD0</span>Consistent in '+st.consistent+' event'+(st.consistent>1?'s':'')+'</div>');
+  scBadges.push('<div class="sc-badge sc-badge-blue"><span class="sc-badge-ico">\uD83D\uDD25</span>Best single race: '+ord(st.bestRace)+'</div>');
+
+  /* ── Assemble HTML ── */
+  panel.innerHTML=
+
+    /* Scorecard */
+    '<div class="content">'
+    +'<div class="scorecard">'
+    +'<div class="sc-left">'
+    +'<div class="sc-sailor-name '+(key==='mette'?'m-name':'s-name')+'">'+sailor.toUpperCase()+'</div>'
+    +'<div class="sc-sail">BEL &bull; Sail #'+cfg.sail+'</div>'
+    +'</div>'
+    +'<div class="sc-center">'
+    +'<div class="sc-stat"><div class="sc-stat-n">'+st.pb+'</div><div class="sc-stat-l">Best Finish</div><div class="sc-stat-s">'+activeSeasonKey+' season</div></div>'
+    +'<div class="sc-stat"><div class="sc-stat-n">'+st.avg+'</div><div class="sc-stat-l">Season Avg</div><div class="sc-stat-s">All regattas</div></div>'
+    +'<div class="sc-stat"><div class="sc-stat-n">'+st.bestRace+'</div><div class="sc-stat-l">Best Race</div><div class="sc-stat-s">Single race</div></div>'
+    +'<div class="sc-stat"><div class="sc-stat-n">'+(st.consistent||'&mdash;')+'</div><div class="sc-stat-l">Consistent</div><div class="sc-stat-s">Spread &le;5</div></div>'
+    +'<div class="sc-stat"><div class="sc-stat-n">'+st.n+'</div><div class="sc-stat-l">Regattas</div><div class="sc-stat-s">'+activeSeasonKey+' season</div></div>'
+    +'</div>'
+    +'<div class="sc-right">'+scBadges.join('')+'</div>'
+    +'</div>'
+
+    /* Goal zone */
+    +'<div class="goal-strip">'
+    +'<span class="goal-strip-ico">\uD83C\uDFAF</span>'
+    +'<div class="goal-strip-text">46-boat reference fleet: aim for positions <strong>'+cfg.ref_lo+'&ndash;'+cfg.ref_hi+'</strong>. The green band scales with every fleet size &mdash; percentile stays comparable across all events and seasons.</div>'
+    +'</div>'
+
+    /* Career chart */
+    +'<div>'
+    +'<div class="sec"><h2>Career Arc &mdash; All Seasons</h2><span class="sec-sub">Fleet percentile per regatta &bull; current season full colour</span></div>'
+    +'<div class="chart-card dark"><div class="cv cv-220"><canvas id="'+pfx+'-career"></canvas></div></div>'
+    +'</div>'
+
+    /* Year-over-Year comparison */
+    +(prevSeasonKey && prevRegs.length ?
+      '<div>'
+      +'<div class="sec"><h2>Year over Year &mdash; '+prevSeasonKey+' vs '+activeSeasonKey+'</h2><span class="sec-sub">Fleet percentile by calendar month &bull; track progress at the same point in the season</span></div>'
+      +'<div class="chart-card">'
+      +'<div class="leg-row">'
+      +'<div class="leg-item"><div class="leg-dline" style="border-color:'+col+'55"></div>'+prevSeasonKey+'</div>'
+      +'<div class="leg-item"><div class="leg-line" style="background:'+colLt+'"></div>'+activeSeasonKey+'</div>'
+      +'</div>'
+      +'<div class="cv cv-260"><canvas id="'+pfx+'-yoy"></canvas></div>'
+      +'</div>'
+      +'</div>'
+    : '')
+
+    /* Season journey + scatter */
+    +'<div>'
+    +'<div class="sec"><h2>'+activeSeasonKey+' Season Journey</h2><span class="sec-sub">Final position per regatta &bull; individual races shown as dots</span></div>'
+    +'<div class="chart-card">'
+    +'<div class="leg-row">'
+    +'<div class="leg-item"><div class="leg-dot" style="background:'+col+'"></div>Final position</div>'
+    +'<div class="leg-item"><div class="leg-dot" style="background:'+col+'55;width:6px;height:6px"></div>Individual races</div>'
+    +'<div class="leg-item"><div class="leg-band"></div>Goal zone</div>'
+    +'<div class="leg-item"><div class="leg-dline" style="border-color:var(--gold)"></div>Running avg</div>'
+    +(hg?'<div class="leg-item"><div class="leg-dot" style="background:#B8860B;width:7px;height:7px;border:2px solid #fff;box-shadow:0 0 0 1px #B8860B"></div>Girls pos</div>':'')
+    +'</div>'
+    +'<div class="cv cv-260"><canvas id="'+pfx+'-journey"></canvas></div>'
+    +'</div>'
+    +'</div>'
+
+    /* All races scatter */
+    +'<div>'
+    +'<div class="sec"><h2>Race by Race &mdash; '+activeSeasonKey+'</h2><span class="sec-sub">Every race &bull; hollow = discard &bull; group colour shown</span></div>'
+    +'<div class="chart-card">'
+    +'<div class="leg-row">'
+    +'<div class="leg-item"><div class="leg-dot" style="background:'+col+'"></div>Counted</div>'
+    +'<div class="leg-item"><div class="leg-dot" style="background:rgba(10,22,40,0.2);border:1px solid var(--muted2);width:6px;height:6px"></div>Discard</div>'
+    +'<div class="leg-item"><div class="leg-band"></div>Goal zone</div>'
+    +'<div class="leg-item"><div class="leg-dline" style="border-color:var(--gold)"></div>Season avg</div>'
+    +'</div>'
+    +'<div class="cv cv-300"><canvas id="'+pfx+'-scatter"></canvas></div>'
+    +'</div>'
+    +'</div>'
+
+    /* Spread + range */
+    +'<div class="grid2">'
+    +'<div>'
+    +'<div class="sec"><h2>Race Spread</h2><span class="sec-sub">Range per event (excl. discard)</span></div>'
+    +'<div class="chart-card"><div class="cv cv-180"><canvas id="'+pfx+'-spread"></canvas></div></div>'
+    +'</div>'
+    +'<div>'
+    +'<div class="sec"><h2>Best vs Worst</h2><span class="sec-sub">Place range per regatta</span></div>'
+    +'<div class="chart-card"><div class="cv cv-180"><canvas id="'+pfx+'-range"></canvas></div></div>'
+    +'</div>'
+    +'</div>'
+
+    /* Wind Performance + Steadiness — side by side */
+    +'<div class="grid2">'
+    +'<div>'
+    +'<div class="sec"><h2>Wind &amp; Performance</h2><span class="sec-sub">&#9679; steady &mdash;&mdash; &#9675; gust &bull; green = good day, red = tough day</span></div>'
+    +'<div class="chart-card"><div class="cv cv-220"><canvas id="'+pfx+'-wind"></canvas></div></div>'
+    +'</div>'
+    +'<div>'
+    +'<div class="sec"><h2>Steadiness</h2><span class="sec-sub">How close were your races? &bull; higher = more consistent</span></div>'
+    +'<div class="chart-card"><div class="cv cv-220"><canvas id="'+pfx+'-consist"></canvas></div></div>'
+    +'</div>'
+    +'</div>'
+
+    /* Discard Analysis */
+    +'<div>'
+    +'<div class="sec"><h2>Discard Analysis</h2><span class="sec-sub">Which race number gets discarded most?</span></div>'
+    +'<div class="chart-card"><div class="cv cv-180"><canvas id="'+pfx+'-discard"></canvas></div></div>'
+    +'</div>'
+
+    /* Girls scorecard */
+    +(hg ?
+      '<div>'
+      +'<div class="sec"><h2>Girls Scorecard</h2><span class="sec-sub">Position among girls &bull; international &amp; Belgian ranking</span></div>'
+      +'<div class="girls-card">'
+      +'<div class="girls-card-top">'
+      +'<h3>Girls Racing &mdash; '+activeSeasonKey+'</h3>'
+      +'<div style="text-align:right"><div class="girls-best">'+ord(gBest)+'</div><div class="girls-best-lbl">Season best</div></div>'
+      +'</div>'
+      +'<div class="girls-stats-strip" style="grid-template-columns:repeat('+(hbg?6:4)+',1fr)">'
+      +'<div class="gs-stat"><div class="gs-n">'+ord(gBest)+'</div><div class="gs-l">Intl Best</div></div>'
+      +'<div class="gs-stat"><div class="gs-n">'+gAvg+'</div><div class="gs-l">Intl Avg</div></div>'
+      +(hbg?'<div class="gs-stat" style="border-left:2px solid var(--gold-dim)"><div class="gs-n" style="color:var(--gold)">'+ord(bgBest)+'</div><div class="gs-l">&#9873; Bel Best</div></div>'
+      +'<div class="gs-stat"><div class="gs-n" style="color:var(--gold)">'+bgAvg+'</div><div class="gs-l">&#9873; Bel Avg</div></div>':'')
+      +'<div class="gs-stat"><div class="gs-n">'+gTop3+'</div><div class="gs-l">Top 3 finishes</div></div>'
+      +'<div class="gs-stat"><div class="gs-n">'+gPctA+'%</div><div class="gs-l">Avg percentile</div></div>'
+      +'</div>'
+      +'<div class="girls-body">'
+      +'<table class="girls-tbl"><thead><tr><th>Regatta</th><th>Place</th><th>Fleet</th><th style="min-width:100px">Percentile</th><th>Badge</th></tr></thead>'
+      +'<tbody>'+girlsRows+'</tbody></table>'
+      +'</div>'
+      +'<div class="girls-trend">'
+      +'<div class="girls-trend-lbl">'+(hbg?'&#9873; Belgian girls position trend':'Position trend')+' &mdash; lower is better</div>'
+      +'<div class="cv cv-160"><canvas id="'+gcId+'"></canvas></div>'
+      +'</div>'
+      +'</div>'
+      +'</div>'
+    : '')
+
+    /* Regatta log */
+    +'<div>'
+    +'<div class="sec"><h2>Regatta Log &mdash; '+activeSeasonKey+'</h2><span class="sec-sub">Tap to expand race detail</span></div>'
+    +'<div class="reg-log">'+regLogHtml+'</div>'
+    +'</div>'
+
+    /* Badges */
+    +'<div>'
+    +'<div class="sec"><h2>Badges &amp; Trophy Cabinet</h2><span class="sec-sub">'+activeSeasonKey+' season achievements</span></div>'
+    +'<div class="badges-grid">'+badgesHtml+'</div>'
+    +'<div class="trophy-cab">'
+    +'<div class="tc-hdr"><div class="tc-ttl">Trophy Cabinet</div><div class="tc-count">'+T.length+' achievement'+(T.length!==1?'s':'')+'</div></div>'
+    +(trophyHtml||'<div style="font-size:12px;color:var(--muted);text-align:center;padding:12px">No achievements yet &mdash; get racing!</div>')
+    +'</div>'
+    +'</div>'
+
+    +'</div>';/* .content */
+
+  /* ── Open first regatta ── */
+  var fh=panel.querySelector('.reg-hdr'),fb=document.getElementById(pfx+'-rb-0');
+  if(fh&&fb){fb.classList.add('open');fh.classList.add('open');}
+
+  /* ── Render charts ── */
+  Chart.defaults.color='#7A7268';
+  Chart.defaults.font.family="'Barlow Condensed', sans-serif";
+  Chart.defaults.font.size=13;
+
+  /* Career chart */
+  new Chart(document.getElementById(pfx+'-career'),{
+    type:'bar',
+    data:{labels:careerLabels,datasets:[{data:careerPts,backgroundColor:careerCols,borderRadius:2,borderSkipped:false,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{bottom:24}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'rgba(255,255,255,0.55)',font:{size:11},maxRotation:45}},
+        y:{min:0,max:100,grid:GL_DARK,
+          ticks:{color:'rgba(255,255,255,0.55)',font:{size:11},callback:function(v){return v+'%';}},
+          title:{display:true,text:'Fleet percentile (higher = better)',color:'rgba(255,255,255,0.45)',font:{size:11}}}
+      },
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#1E3352',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:9,
+          callbacks:{
+            title:function(ctx){
+              var idx=ctx[0].dataIndex;
+              var b=careerBounds.find(function(b){return idx>=b.start&&idx<=b.end;});
+              return b?b.season+' \u2014 '+careerLabels[idx]:'';
+            },
+            label:function(ctx){return 'Fleet percentile: '+ctx.raw+'%';}
+          }}}
+    },
+    plugins:[careerSeasonPlugin(careerBounds)]
+  });
+
+  /* Year-over-Year chart */
+  if(prevSeasonKey && prevRegs.length){
+    new Chart(document.getElementById(pfx+'-yoy'),{
+      type:'scatter',
+      data:{datasets:[
+        {label:prevSeasonKey,data:yoyPrev,showLine:true,borderDash:[6,4],borderColor:col+'55',backgroundColor:col+'22',
+          pointBackgroundColor:col+'55',pointBorderColor:'#fff',pointBorderWidth:1,pointRadius:5,pointHoverRadius:8,borderWidth:1.5,tension:.3,fill:false},
+        {label:activeSeasonKey,data:yoyCurr,showLine:true,borderColor:colLt,backgroundColor:col+'10',
+          pointBackgroundColor:colLt,pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:7,pointHoverRadius:10,borderWidth:2.5,tension:.3,fill:false}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        scales:{
+          x:{type:'linear',min:1,max:12,ticks:{stepSize:1,color:'#9A9388',font:{size:12},callback:function(v){return MONTHS[v]||'';}},grid:GL},
+          y:{min:0,max:100,grid:GL,ticks:{color:'#9A9388',callback:function(v){return v+'%';}},
+            title:{display:true,text:'Fleet percentile (higher = better)',color:'#9A9388',font:{size:11}}}
+        },
+        plugins:{
+          legend:{display:true,labels:{color:'#9A9388',boxWidth:10,font:{size:12}}},
+          tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:10,
+            callbacks:{
+              title:function(ctx){return ctx[0].raw.name;},
+              label:function(ctx){
+                var d=ctx.raw;
+                return[' '+d.date+' \u2014 Fleet percentile: '+d.y.toFixed(1)+'%',' '+ord(d.pos)+' of '+d.fleet];
+              }
+            }}
+        }
+      }
+    });
+  }
+
+  /* Journey chart — with optional girls position overlay on secondary axis */
+  var jGirlsData=regs.map(function(r){return r.girlsPos||null;});
+  var jHasGirls=jGirlsData.some(function(v){return v!=null;});
+  var jGirlsMax=jHasGirls?Math.max(...jGirlsData.filter(function(v){return v!=null;}))+3:10;
+  var jDatasets=[
+    {type:'scatter',data:regs.reduce(function(acc,reg,ri){
+      reg.races.filter(function(r){return !r.discard;}).forEach(function(r){acc.push({x:ri,y:r.place});});
+      return acc;
+    },[]),backgroundColor:col+'44',pointRadius:4,pointHoverRadius:6,pointBorderColor:'transparent',order:4,yAxisID:'y'},
+    {data:st.runAvg,borderColor:'#B8860B',borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false,tension:.3,order:3,yAxisID:'y'},
+    {data:st.finals,borderColor:col,backgroundColor:col+'10',
+      pointBackgroundColor:col,pointBorderColor:'#fff',pointBorderWidth:2,
+      pointRadius:8,pointHoverRadius:11,borderWidth:2,tension:.3,fill:false,order:1,yAxisID:'y'}
+  ];
+  if(jHasGirls){
+    jDatasets.push({data:jGirlsData,borderColor:'#B8860B',backgroundColor:'rgba(184,134,11,0.08)',
+      pointBackgroundColor:jGirlsData.map(function(v){return v!=null&&v<=3?'#B8860B':'#B8860B88';}),
+      pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:6,pointHoverRadius:9,
+      borderWidth:1.5,borderDash:[3,3],tension:.3,fill:false,order:2,yAxisID:'y2',spanGaps:true});
+  }
+  var jScales={
+    x:{type:'category',grid:{color:'rgba(10,22,40,0.04)'},ticks:{color:'#9A9388',font:{size:12}}},
+    y:{reverse:true,min:0,max:maxFleet+5,grid:GL,
+      ticks:{stepSize:10,callback:function(v){return v>0?ord(v):'';},color:'#9A9388'}}
+  };
+  if(jHasGirls){
+    jScales.y2={position:'right',reverse:true,min:0,max:jGirlsMax,
+      grid:{drawOnChartArea:false},
+      ticks:{stepSize:Math.max(1,Math.round(jGirlsMax/6)),callback:function(v){return v>0?ord(v):'';},color:'#B8860B',font:{size:11}},
+      title:{display:true,text:'Girls position',color:'#B8860B',font:{size:11}}};
+  }
+  new Chart(document.getElementById(pfx+'-journey'),{
+    type:'line',
+    data:{labels:regs.map(function(r,i){return '#'+(i+1)+' '+r.name;}),datasets:jDatasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:jScales,
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:10,
+          callbacks:{label:function(ctx){
+            if(ctx.datasetIndex===2){
+              var r=regs[ctx.dataIndex],z=zoneOf(r.finalPos,r.fleet,cfg);
+              var lo2=pfp(cfg.goal_pct_hi,r.fleet),hi2=pfp(cfg.goal_pct_lo,r.fleet);
+              return[' Final: '+ord(r.finalPos)+' of '+r.fleet+' \u2014 '+z.label,' Goal zone: '+lo2+'\u2013'+hi2];}
+            if(ctx.datasetIndex===0)return' Race: '+ord(ctx.raw.y);
+            if(ctx.datasetIndex===1)return' Running avg: '+ord(ctx.raw);
+            if(ctx.datasetIndex===3){
+              var gr=regs[ctx.dataIndex];
+              return gr.girlsPos!=null?' Girls: '+ord(gr.girlsPos)+' of '+gr.girlsTotal:null;}
+            return null;
+          }}}}
+    },
+    plugins:[goalZonePlugin(regs,cfg)]
+  });
+
+  /* Season scatter (all races) — uses raceFleet for grouped regattas */
+  var sL=[],sD=[],sC=[],sBC=[],sR=[],sBW=[],sRF=[],sDisc=[],breaks=[],pos=0;
+  regs.forEach(function(reg){
+    var start=pos,bFleet=reg.fleet;
+    reg.races.forEach(function(r){
+      var rf=r.raceFleet||reg.fleet;
+      bFleet=rf;                       /* use raceFleet (group size) for goal zone */
+      sL.push('R'+r.num);
+      sD.push(r.place);
+      sDisc.push(r.discard);
+      sC.push(r.discard?'rgba(10,22,40,0.15)':col);
+      sBC.push(r.discard?'#9A9388':'#fff');
+      sR.push(r.discard?4:6);sBW.push(r.discard?1:1.5);
+      sRF.push(rf);pos++;
+    });
+    breaks.push({start:start,end:pos-1,name:reg.name,fleet:bFleet});
+  });
+  var maxRaceFleet=Math.max(...sRF);
+  var rfSum=0,rfCnt=0;sRF.forEach(function(v){rfSum+=v;rfCnt++;});
+  var avgRaceFleet=Math.round(rfSum/rfCnt);
+  var rs2=0,rc2=0;
+  var sAvg=sD.map(function(v){if(v!=null){rs2+=v;rc2++;}return rc2>0?Math.round(rs2/rc2):null;});
+  new Chart(document.getElementById(pfx+'-scatter'),{
+    type:'line',
+    data:{labels:sL,datasets:[
+      {data:sAvg,borderColor:'#B8860B',borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false,tension:.4,spanGaps:true,order:2},
+      {data:sD,borderColor:col+'30',borderWidth:1,backgroundColor:sC,
+        pointBackgroundColor:sC,pointBorderColor:sBC,pointBorderWidth:sBW,
+        pointRadius:sR,pointHoverRadius:9,spanGaps:true,tension:0,fill:false,order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{bottom:56}},
+      scales:{
+        x:{grid:{color:'rgba(10,22,40,0.04)'},ticks:{color:'#9A9388',font:{size:11}}},
+        y:{reverse:true,min:0,max:maxRaceFleet+5,grid:GL,
+          ticks:{stepSize:10,callback:function(v){return v>0?ord(v):'';},color:'#9A9388'},
+          title:{display:true,text:'Place (lower = better)',color:'#9A9388',font:{size:11}}}
+      },
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:9,
+          callbacks:{
+            title:function(ctx){var ri=-1;breaks.forEach(function(b,i){if(ctx[0].dataIndex>=b.start&&ctx[0].dataIndex<=b.end)ri=i;});
+              return ri>=0?breaks[ri].name+' \u2014 Race '+(ctx[0].dataIndex-breaks[ri].start+1):'';},
+            label:function(ctx){
+              if(ctx.datasetIndex===1){
+                var rf=sRF[ctx.dataIndex];
+                var disc=sDisc[ctx.dataIndex];
+                var lbl=' Place: '+ord(ctx.raw)+' of '+rf+' ('+pct(ctx.raw,rf).toFixed(1)+'%)';
+                return disc?lbl+' \u2014 discard':lbl;
+              }
+              return' Season avg: '+ord(ctx.raw);
+            }
+          }}}
+    },
+    plugins:[scatterGoalPlugin(breaks,cfg),regDivPlugin(breaks,false)]
+  });
+
+  /* Spread */
+  new Chart(document.getElementById(pfx+'-spread'),{
+    type:'bar',
+    data:{labels:regs.map(function(_,i){return '#'+(i+1);}),
+      datasets:[{data:st.spreads,backgroundColor:st.spreads.map(function(s){return s<=5?'#1A7A4A':s<=12?'#B8860B':'#C0392B';}),borderRadius:3,borderSkipped:false,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{x:{grid:{display:false},ticks:{color:'#9A9388'}},y:{beginAtZero:true,grid:GL,ticks:{stepSize:5,color:'#9A9388'}}},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:8,
+        callbacks:{label:function(ctx){return ctx.raw<=5?' Consistent! Spread: '+ctx.raw:' Spread: '+ctx.raw;}}}}},
+    plugins:[conLinePlugin()]
+  });
+
+  /* Range */
+  new Chart(document.getElementById(pfx+'-range'),{
+    type:'bar',
+    data:{labels:regs.map(function(_,i){return '#'+(i+1);}),
+      datasets:[
+        {label:'Best',data:st.best,backgroundColor:'#1A7A4A',borderRadius:{topLeft:3,topRight:3,bottomLeft:0,bottomRight:0},borderSkipped:false,borderWidth:0,stack:'r'},
+        {label:'Gap',data:st.worst.map(function(w,i){return w-st.best[i];}),backgroundColor:col+'44',borderRadius:{topLeft:0,topRight:0,bottomLeft:3,bottomRight:3},borderSkipped:false,borderWidth:0,stack:'r'}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{color:'#9A9388'}},
+        y:{stacked:true,reverse:true,min:0,max:maxFleet+5,grid:GL,ticks:{stepSize:10,callback:function(v){return v>0?ord(v):'';},color:'#9A9388'}}
+      },
+      plugins:{legend:{display:true,labels:{color:'#9A9388',boxWidth:10,font:{size:12}}},
+        tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:8,
+          callbacks:{label:function(ctx){return ctx.datasetIndex===0?' Best: '+ord(ctx.raw):' Worst: '+ord(st.best[ctx.dataIndex]+ctx.raw);}}}}}
+  });
+
+  /* Wind & Performance — dumbbell chart: ● steady ——— ○ gust */
+  var perfCol=function(p){return p==='good'?'#1A7A4A':p==='ok'?'#B8860B':'#C0392B';};
+  var perfColA=function(p){return p==='good'?'rgba(26,122,74,0.25)':p==='ok'?'rgba(184,134,11,0.25)':'rgba(192,57,43,0.25)';};
+  var wMaxWind=windRegs.length>0?Math.max(...windRegs.map(function(w){return w.gust;}))+4:24;
+  new Chart(document.getElementById(pfx+'-wind'),{
+    type:'scatter',
+    data:{datasets:[
+      /* Steady dots — filled */
+      {label:'Steady',data:windSteadyPts,
+        backgroundColor:windRegs.map(function(w){return perfCol(w.perf);}),
+        borderColor:'#fff',borderWidth:2,pointRadius:8,pointHoverRadius:11,
+        pointStyle:'circle',order:1},
+      /* Gust dots — ring only */
+      {label:'Gust',data:windGustPts,
+        backgroundColor:windRegs.map(function(w){return perfColA(w.perf);}),
+        borderColor:windRegs.map(function(w){return perfCol(w.perf);}),
+        borderWidth:2.5,pointRadius:7,pointHoverRadius:10,
+        pointStyle:'circle',order:2}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{min:0,max:wMaxWind,grid:GL,
+          title:{display:true,text:'Wind speed (knots)',color:'#9A9388',font:{size:11}},
+          ticks:{stepSize:4,color:'#9A9388'}},
+        y:{min:0,max:100,grid:GL,
+          title:{display:true,text:'Fleet percentile',color:'#9A9388',font:{size:11}},
+          ticks:{stepSize:20,callback:function(v){return v+'%';},color:'#9A9388'}}
+      },
+      plugins:{legend:{display:true,position:'top',align:'end',
+        labels:{color:'#9A9388',boxWidth:10,usePointStyle:true,pointStyle:'circle',font:{size:11}}},
+        tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:10,
+          callbacks:{
+            title:function(ctx){return windRegs[ctx[0].dataIndex].name;},
+            label:function(ctx){
+              var w=windRegs[ctx.dataIndex];
+              if(ctx.datasetIndex===0) return[' Steady: '+w.steady+'kn',' Avg race score: '+w.pct+'% ('+w.raceCount+' race'+(w.raceCount>1?'s':'')+')'];
+              return[' Gusts: '+w.gust+'kn',' Direction: '+w.dir];
+            }
+          }}}
+    },
+    plugins:[
+      /* Draw dumbbell connector lines between steady and gust */
+      {id:'dbell',beforeDatasetsDraw:function(chart){
+        var{ctx,chartArea:ca,scales:{x,y}}=chart;if(!ca)return;
+        ctx.save();
+        windRegs.forEach(function(w,i){
+          var xS=x.getPixelForValue(w.steady),xG=x.getPixelForValue(w.gust);
+          var yy=y.getPixelForValue(w.pct);
+          ctx.strokeStyle=perfCol(w.perf);ctx.lineWidth=2.5;ctx.globalAlpha=0.4;
+          ctx.beginPath();ctx.moveTo(xS,yy);ctx.lineTo(xG,yy);ctx.stroke();
+          ctx.globalAlpha=1;
+        });
+        ctx.restore();
+      }},
+      /* Wind zone backgrounds */
+      {id:'wz2',beforeDraw:function(chart){
+        var{ctx,chartArea:ca,scales:{x}}=chart;if(!ca)return;
+        ctx.save();
+        var x8=x.getPixelForValue(8),x15=x.getPixelForValue(15);
+        ctx.globalAlpha=0.035;
+        ctx.fillStyle='#2E7FD4';ctx.fillRect(ca.left,ca.top,x8-ca.left,ca.bottom-ca.top);
+        ctx.fillStyle='#1A7A4A';ctx.fillRect(x8,ca.top,x15-x8,ca.bottom-ca.top);
+        ctx.fillStyle='#C0392B';ctx.fillRect(x15,ca.top,ca.right-x15,ca.bottom-ca.top);
+        ctx.globalAlpha=1;
+        ctx.fillStyle='#9A9388';ctx.font='600 10px Barlow Condensed';
+        ctx.fillText('LIGHT',ca.left+4,ca.bottom-6);
+        ctx.fillText('MEDIUM',(x8+x15)/2-16,ca.bottom-6);
+        ctx.fillText('FRESH',x15+4,ca.bottom-6);
+        ctx.restore();
+      }},
+      /* Regatta name labels */
+      {id:'wlbl2',afterDatasetsDraw:function(chart){
+        var{ctx}=chart;var meta=chart.getDatasetMeta(1);/* gust points = rightmost */
+        ctx.save();ctx.fillStyle='#7A7268';ctx.font='600 10px Barlow Condensed';ctx.textAlign='left';
+        meta.data.forEach(function(pt,i){
+          var nm=windRegs[i].name;
+          if(nm.length>16)nm=nm.substring(0,16)+'\u2026';
+          ctx.fillText(nm,pt.x+10,pt.y-6);
+        });ctx.restore();
+      }}
+    ]
+  });
+
+  /* Steadiness chart — % of races within ±3 of median */
+  new Chart(document.getElementById(pfx+'-consist'),{
+    type:'bar',
+    data:{labels:regs.map(function(_,i){return '#'+(i+1);}),
+      datasets:[{data:steadyData,
+        backgroundColor:steadyData.map(function(v){return v>=80?'#1A7A4A':v>=50?'#B8860B':'#C0392B';}),
+        borderRadius:4,borderSkipped:false,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#9A9388'}},
+        y:{min:0,max:100,grid:GL,
+          ticks:{stepSize:20,callback:function(v){return v+'%';},color:'#9A9388'}}
+      },
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:8,
+          callbacks:{title:function(ctx){return regs[ctx[0].dataIndex].name;},
+            label:function(ctx){
+              return ' '+ctx.raw+'% of races within \xb13 places of median';
+            }}}
+      }
+    },
+    plugins:[{id:'sline',afterDraw:function(chart){
+      var{ctx,chartArea:ca,scales:{y}}=chart;if(!ca)return;
+      ctx.save();ctx.strokeStyle='rgba(26,122,74,0.5)';ctx.setLineDash([4,3]);ctx.lineWidth=1.5;
+      var yy=y.getPixelForValue(80);
+      ctx.beginPath();ctx.moveTo(ca.left,yy);ctx.lineTo(ca.right,yy);ctx.stroke();
+      ctx.setLineDash([]);ctx.fillStyle='#1A7A4A';ctx.font='600 10px Barlow Condensed';
+      ctx.fillText('STEADY',ca.right-42,yy-4);
+      ctx.restore();
+    }},{id:'spct',afterDatasetsDraw:function(chart){
+      var{ctx}=chart;var meta=chart.getDatasetMeta(0);ctx.save();
+      ctx.fillStyle='#fff';ctx.font='700 12px Barlow Condensed';ctx.textAlign='center';
+      meta.data.forEach(function(bar,i){
+        if(steadyData[i]>15)ctx.fillText(steadyData[i]+'%',bar.x,(bar.y+bar.base)/2+5);
+      });ctx.restore();
+    }}]
+  });
+
+  /* Discard Analysis — which race number gets discarded */
+  new Chart(document.getElementById(pfx+'-discard'),{
+    type:'bar',
+    data:{labels:discRaceLabels,datasets:[{data:discRaceCounts,
+      backgroundColor:col,borderRadius:4,borderSkipped:false,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#9A9388',font:{size:13,weight:600}}},
+        y:{beginAtZero:true,grid:GL,ticks:{stepSize:1,color:'#9A9388',callback:function(v){return Number.isInteger(v)?v:'';}}}
+      },
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:8,
+          callbacks:{label:function(ctx){return ' Discarded '+ctx.raw+' time'+(ctx.raw!==1?'s':'');}}}
+      }
+    },
+    plugins:[{id:'dtot2',afterDraw:function(chart){
+      var{ctx,chartArea:ca}=chart;ctx.save();
+      ctx.fillStyle='#7A7268';ctx.font='600 12px Barlow Condensed';ctx.textAlign='right';
+      ctx.fillText(discTotal+' discard'+(discTotal!==1?'s':'')+' across '+regs.length+' regattas',ca.right-4,ca.top+12);
+      ctx.restore();
+    }},{id:'dcnt',afterDatasetsDraw:function(chart){
+      var{ctx}=chart;var meta=chart.getDatasetMeta(0);ctx.save();
+      ctx.fillStyle='#fff';ctx.font='700 13px Barlow Condensed';ctx.textAlign='center';
+      meta.data.forEach(function(bar,i){
+        if(discRaceCounts[i]>0)ctx.fillText(discRaceCounts[i],(bar.x),(bar.y+bar.base)/2+5);
+      });ctx.restore();
+    }}]
+  });
+
+  /* Girls trend — use Belgian girls if available, otherwise international */
+  var gtData=hbg?bgR:gR;
+  var gtIsBel=hbg;
+  var gtMax=gtIsBel?Math.max(...bgR.map(function(r){return r.belgianGirlsTotal;})):mxGT;
+  if(gtData.length>0){
+    requestAnimationFrame(function(){
+      var el=document.getElementById(gcId);if(!el)return;
+      new Chart(el,{
+        type:'line',
+        data:{labels:gtData.map(function(r){return r.name.length>12?r.name.substring(0,12)+'\u2026':r.name;}),
+          datasets:[{data:gtData.map(function(r){return gtIsBel?r.belgianGirlsPos:r.girlsPos;}),
+            borderColor:'#B8860B',backgroundColor:'rgba(184,134,11,0.06)',
+            pointBackgroundColor:gtData.map(function(r){var p=gtIsBel?r.belgianGirlsPos:r.girlsPos;return p<=3?'#B8860B':'#1A5FAB';}),
+            pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:7,pointHoverRadius:10,
+            borderWidth:2,tension:.3,fill:true}]},
+        options:{responsive:true,maintainAspectRatio:false,
+          scales:{
+            x:{grid:{display:false},ticks:{color:'#9A9388',font:{size:12}}},
+            y:{reverse:true,min:0,max:gtMax+2,grid:GL,
+              ticks:{stepSize:Math.max(1,Math.round(gtMax/6)),callback:function(v){return v>0?ord(v):'';},color:'#9A9388'},
+              title:{display:true,text:(gtIsBel?'Belgian girls position':'Girls position'),color:'#9A9388',font:{size:11}}}
+          },
+          plugins:{legend:{display:false},
+            tooltip:{backgroundColor:'#15263D',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,padding:8,
+              callbacks:{label:function(ctx){
+                var r=gtData[ctx.dataIndex];
+                var tot=gtIsBel?r.belgianGirlsTotal:r.girlsTotal;
+                return ' '+ord(ctx.raw)+' of '+tot+(gtIsBel?' Belgian':'')+' girls';
+              }}}}},
+        plugins:[girlsGoalPlugin(gtMax),{id:'t3',beforeDatasetsDraw:function(chart){
+          var{ctx,chartArea:ca,scales:{y}}=chart;if(!ca)return;
+          var yy=y.getPixelForValue(3.5);ctx.save();
+          ctx.strokeStyle='rgba(184,134,11,0.5)';ctx.setLineDash([4,3]);ctx.lineWidth=1.5;
+          ctx.beginPath();ctx.moveTo(ca.left,yy);ctx.lineTo(ca.right,yy);ctx.stroke();
+          ctx.setLineDash([]);ctx.fillStyle='#B8860B';ctx.font='600 11px Barlow Condensed';
+          ctx.fillText('Top 3 target',ca.right-76,yy-4);ctx.restore();
+        }}]
+      });
+    });
+  }
+}
+
+/* ── UI functions ── */
+function toggleReg(pfx,idx,hdr){
+  var g=document.getElementById(pfx+'-rb-'+idx);
+  var open=g.classList.toggle('open');
+  hdr.classList.toggle('open',open);
+}
+
+var _activeSailor='mette';
+var _activeSeasons={'mette':null,'stella':null};
+
+function showSailor(key){
+  _activeSailor=key;
+  ['mette','stella'].forEach(function(k){
+    document.getElementById('p-'+k).classList.toggle('active',k===key);
+    document.querySelector('.'+(k==='mette'?'m':'s')+'-tab').classList.toggle('active',k===key);
+  });
+  updateSeasonBar(key);
+}
+
+function updateSeasonBar(key){
+  var sailor=key==='mette'?'Mette':'Stella';
+  var sailorData=D[sailor];
+  if(!sailorData)return;
+  var seasons=Object.keys(sailorData).sort();
+  var active=_activeSeasons[key]||seasons[seasons.length-1];
+  _activeSeasons[key]=active;
+
+  var bar=document.getElementById('season-bar');
+  bar.innerHTML='<span class="season-label">Season</span>'
+    +seasons.map(function(s){
+      return '<button onclick="switchSeason(\''+key+'\',\''+s+'\')" class="season-pill'+(s===active?' active':'')+'" id="spill-'+key+'-'+s+'">'+s+'</button>';
+    }).join('')
+    +'<span class="season-meta" id="season-meta"></span>';
+  updateSeasonMeta(key,active,sailorData[active]);
+}
+
+function updateSeasonMeta(key,season,regs){
+  var meta=document.getElementById('season-meta');
+  if(!meta||!regs)return;
+  meta.textContent=regs.length+' regattas &bull; '+regs.reduce(function(a,r){return a+r.races.length;},0)+' races';
+  meta.innerHTML=regs.length+' regattas &bull; '+regs.reduce(function(a,r){return a+r.races.length;},0)+' races';
+}
+
+function switchSeason(key,seasonKey){
+  _activeSeasons[key]=seasonKey;
+  var sailor=key==='mette'?'Mette':'Stella';
+  updateSeasonBar(key);
+  buildPanel(key,D[sailor],seasonKey);
+  updateSeasonMeta(key,seasonKey,D[sailor][seasonKey]);
+}
+
+/* ── Init ── */
+if(D&&D.Mette) buildPanel('mette',D.Mette,null);
+if(D&&D.Stella)buildPanel('stella',D.Stella,null);
+showSailor('mette');
+document.getElementById('upd-time').textContent='Updated: 20 Apr 2026 at 10:52';
+document.getElementById('footer-upd').textContent='Updated: 20 Apr 2026 at 10:52';
+</script>
+</body>
+</html>
